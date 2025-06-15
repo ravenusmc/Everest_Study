@@ -2,6 +2,7 @@
   <div id="app">
     <div class="main-project-div">
       <JumbotronComponent />
+      <MidSectionComponent />
     </div>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
 
@@ -10,11 +11,13 @@
 
 <script>
 import JumbotronComponent from './components/landing/JumbotronComponent.vue'
+import MidSectionComponent from './components/landing/MidSectionComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    JumbotronComponent
+    JumbotronComponent,
+    MidSectionComponent,
   }
 }
 </script>
