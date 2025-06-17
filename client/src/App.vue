@@ -1,23 +1,18 @@
 <template>
   <div id="app">
-    <div class="main-project-div">
-      <JumbotronComponent />
-      <MidSectionComponent />
-    </div>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-
+    <NavBar />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import JumbotronComponent from './components/landing/JumbotronComponent.vue'
-import MidSectionComponent from './components/landing/MidSectionComponent.vue'
+import NavBar from "./components/common/NavBar.vue";
 
 export default {
   name: 'App',
   components: {
-    JumbotronComponent,
-    MidSectionComponent,
+    NavBar
   }
 }
 </script>
