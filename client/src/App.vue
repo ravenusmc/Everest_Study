@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <NavBar />
     <router-view></router-view>
+    <FootComponent />
   </div>
 </template>
 
 <script>
 import NavBar from "./components/common/NavBar.vue";
+import FootComponent from "@/components/common/FootComponent.vue";
 
 export default {
   name: 'App',
   components: {
-    NavBar
+    NavBar,
+    FootComponent,
   }
 }
 </script>

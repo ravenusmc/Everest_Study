@@ -23,7 +23,7 @@
   
   <style scoped>
   .navbar {
-    background-color: #2c3e50;
+    background-color: #121212;
     height: 50px;
     display: flex; 
     justify-content: space-between;
