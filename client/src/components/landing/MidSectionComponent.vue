@@ -36,6 +36,7 @@
   background: #121212; /* deep dark background */
   border-radius: 8px;
   color: #e0e0e0; /* light text for contrast */
+  margin-bottom: 50px;
 }
 
 .content {
