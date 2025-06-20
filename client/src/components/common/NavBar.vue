@@ -3,6 +3,7 @@
       <nav class="navbar">
         <div class="navlinks-left">
           <a class="navlink"><router-link class="link-style" to="/">Home</router-link></a>
+          <a class="navlink"><router-link class="link-style" to="/data">Data</router-link></a>
           <a class="navlink"><router-link class="link-style" to="/about">About</router-link></a>
         </div>
         <!-- <div class="navlinks-right">

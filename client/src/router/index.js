@@ -16,11 +16,11 @@ const routes = [
       name: 'about',
       component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
     },
-    // {
-    //   path: '/data',
-    //   name: 'data',
-    //   component: () => import(/* webpackChunkName: "about" */ '../views/DataView.vue')
-    // },
+    {
+      path: '/data',
+      name: 'data',
+      component: () => import('../views/DataView.vue')
+    },
   ]
   
   const router = new VueRouter({
