@@ -1,0 +1,32 @@
+Ideas for graphs: 
+
+1. Most common months for deaths - line graph 
+2. Graph of all deaths by age 
+3. Top 3 deadliest expeditions 
+4. Top 3 nationalies 
+5. Top 3 or 5 causes of death
+6. Top 3 locations for deaths 
+
+Chat GPT ideas: 
+
+Heat Maps:
+
+Deaths per Year vs. Nationality: A heat map showing which nationalities had more deaths in which years.
+
+Location vs. Cause of Death: A heat map showing which locations are most associated with specific causes of death.
+
+Linear Regression: 
+
+Age vs. Year: See if there is a trend in climbers’ ages over time.
+
+Deaths per Expedition Year: Regression of number of deaths over time to see if safety is improving.
+
+Other Graphs: 
+
+Time Series: Plot total deaths per year to see peaks during major expeditions.
+
+Pie Chart or Bar Plot: Proportion of deaths by cause (avalanche, fall, exposure, etc.).
+
+Stacked Bar: Number of deaths by nationality over time.
+
+Map Plot: If you can geo-locate the Location, a map heat map could show dangerous spots on Everest.
