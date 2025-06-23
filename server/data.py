@@ -12,10 +12,10 @@ class ExamineData():
     self.data = pd.read_csv('./data/everest_deaths.csv')
   
   #Top 3 nationalies
-  def top_three_nations_data(self): 
-    top_three_nations = []
+  def top_three_nations_data(self, rows): 
+    top_nations = []
     columns = ['Nation', 'Deaths']
-    top_three_nations.append(columns)
+    top_nations.append(columns)
     # Group by Nationality and count number of rows (deaths)
     counts = (
         self.data.groupby('Nationality')
@@ -25,7 +25,7 @@ class ExamineData():
     # Drop missing or empty Nationality values
     counts = counts[counts['Nationality'].notnull() & (counts['Nationality'] != '')]
     # Sort by Death Count descending and take top 3
-    top_three = counts.sort_values(by='Death Count', ascending=False).head(3)
+    top_three = counts.sort_values(by='Death Count', ascending=False).head(rows)
     count = 0
     while count <= 2:
       rows = []
@@ -33,9 +33,26 @@ class ExamineData():
       deaths = int(top_three.iloc[count][1])
       rows.append(state)
       rows.append(deaths)
-      top_three_nations.append(rows)
+      top_nations.append(rows)
       count += 1 
-    print(top_three_nations)
+    print(top_nations)
+    # [['Nation', 'Deaths'], ['Nepal', 132], ['India', 27], ['Japan', 19]]
+
+  #Histogram of deaths by age 
+  def deaths_by_age(self, bin_size=10): 
+    # Ensure Age column is numeric (coerce errors to NaN)
+    self.data['Age'] = pd.to_numeric(self.data['Age'], errors='coerce')
+    # Drop rows where Age is NaN (unknown)
+    age_data = self.data.dropna(subset=['Age'])
+    # Create bins: from min age to max age, in steps of 'bin_size'
+    min_age = int(age_data['Age'].min()) // bin_size * bin_size
+    max_age = int(age_data['Age'].max()) // bin_size * bin_size + bin_size
+    bins = list(range(min_age, max_age + bin_size, bin_size))
+    # Cut the ages into bins
+    age_data['Age Group'] = pd.cut(age_data['Age'], bins=bins, right=True)
+    # Count how many deaths per bin
+    counts = age_data['Age Group'].value_counts().sort_index()
+    print(counts)
 
 test_object = ExamineData()
-test_object.top_three_nations_data()
+test_object.deaths_by_age()
