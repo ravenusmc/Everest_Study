@@ -12,7 +12,7 @@ class ExamineData():
     self.data = pd.read_csv('./data/everest_deaths.csv')
   
   #Top 3 nationalies
-  def top_three_nations_data(self, rows): 
+  def top_three_nations_data(self, number_of_nations=3): 
     top_nations = []
     columns = ['Nation', 'Deaths']
     top_nations.append(columns)
@@ -25,7 +25,7 @@ class ExamineData():
     # Drop missing or empty Nationality values
     counts = counts[counts['Nationality'].notnull() & (counts['Nationality'] != '')]
     # Sort by Death Count descending and take top 3
-    top_three = counts.sort_values(by='Death Count', ascending=False).head(rows)
+    top_three = counts.sort_values(by='Death Count', ascending=False).head(number_of_nations)
     count = 0
     while count <= 2:
       rows = []
@@ -53,6 +53,11 @@ class ExamineData():
     # Count how many deaths per bin
     counts = age_data['Age Group'].value_counts().sort_index()
     print(counts)
+  
+  #deadliest expeditions 
+  def deadliest_expeditions(self):
+
+  
 
 test_object = ExamineData()
-test_object.deaths_by_age()
+test_object.deadliest_expeditions()
