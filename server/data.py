@@ -55,8 +55,21 @@ class ExamineData():
     print(counts)
   
   #deadliest expeditions 
-  def deadliest_expeditions(self):
-
+  def deadliest_expeditions(self, number_of_expeditions=3):
+    expeditions = []
+    columns = ['Expeditions', 'Deaths']
+    expeditions.append(columns)
+    # Group by Nationality and count number of rows (deaths)
+    counts = (
+        self.data.groupby('Expedition')
+        .size()
+        .reset_index(name='Death Count')
+    )
+    # Drop missing or empty Nationality values
+    counts = counts[counts['Expedition'].notnull() & (counts['Expedition'] != '')]
+    # Sort by Death Count descending and take top 3
+    top_three = counts.sort_values(by='Death Count', ascending=False).head(number_of_expeditions)
+    print(top_three)
   
 
 test_object = ExamineData()
