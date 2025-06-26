@@ -27,7 +27,7 @@ class ExamineData():
     # Sort by Death Count descending and take top 3
     top_three = counts.sort_values(by='Death Count', ascending=False).head(number_of_nations)
     count = 0
-    while count <= 2:
+    while count <= number_of_nations:
       rows = []
       state = top_three.iloc[count][0]
       deaths = int(top_three.iloc[count][1])
@@ -56,9 +56,9 @@ class ExamineData():
   
   #deadliest expeditions 
   def deadliest_expeditions(self, number_of_expeditions=3):
-    expeditions = []
+    expeditions_list = []
     columns = ['Expeditions', 'Deaths']
-    expeditions.append(columns)
+    expeditions_list.append(columns)
     # Group by Nationality and count number of rows (deaths)
     counts = (
         self.data.groupby('Expedition')
@@ -68,9 +68,27 @@ class ExamineData():
     # Drop missing or empty Nationality values
     counts = counts[counts['Expedition'].notnull() & (counts['Expedition'] != '')]
     # Sort by Death Count descending and take top 3
-    top_three = counts.sort_values(by='Death Count', ascending=False).head(number_of_expeditions)
-    print(top_three)
+    expeditions = counts.sort_values(by='Death Count', ascending=False).head(number_of_expeditions)
+    count = 0
+    while count <= number_of_expeditions - 1:
+      rows = []
+      expedition = expeditions.iloc[count][0]
+      deaths = int(expeditions.iloc[count][1])
+      rows.append(expedition)
+      rows.append(deaths)
+      expeditions_list.append(rows)
+      count += 1 
+    print(expeditions)
   
+  def top_causes_of_death(self, number_of_causes=3):
+    cause_of_death_list = []
+    columns = ['Cause of Death', 'Deaths']
+    expeditions_list.append(columns)
+    counts = (
+        self.data.groupby('Cause_of_Death')
+        .size()
+        .reset_index(name='Death Count')
+    )
 
 test_object = ExamineData()
 test_object.deadliest_expeditions()

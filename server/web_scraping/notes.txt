@@ -2,7 +2,7 @@ Ideas for graphs:
 
 1. Most common months for deaths - line graph 
 2. Graph of all deaths by age - Data for this graph is done
-3. Top 3 deadliest expeditions 
+3. Top 3 deadliest expeditions - Data for this graph is ready 
 4. Top 3 nationalies - Data for this graph is ready. 
 5. Top 3 or 5 causes of death
 6. Top 3 locations for deaths 
