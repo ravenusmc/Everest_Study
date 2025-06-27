@@ -89,6 +89,8 @@ class ExamineData():
         .size()
         .reset_index(name='Death Count')
     )
+        # Drop missing or empty Nationality values
+    counts = counts[counts['Cause_of_Death'].notnull() & (counts['number_of_causes'] != '')]
 
 test_object = ExamineData()
 test_object.deadliest_expeditions()
