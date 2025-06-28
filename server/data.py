@@ -83,14 +83,26 @@ class ExamineData():
   def top_causes_of_death(self, number_of_causes=3):
     cause_of_death_list = []
     columns = ['Cause of Death', 'Deaths']
-    expeditions_list.append(columns)
+    cause_of_death_list.append(columns)
     counts = (
         self.data.groupby('Cause_of_Death')
         .size()
         .reset_index(name='Death Count')
     )
-        # Drop missing or empty Nationality values
-    counts = counts[counts['Cause_of_Death'].notnull() & (counts['number_of_causes'] != '')]
+    # Drop missing or empty Nationality values
+    counts = counts[counts['Cause_of_Death'].notnull() & (counts['Cause_of_Death'] != '')]
+    # Sort by Death Count descending and take top 3
+    cause_of_deaths_df = counts.sort_values(by='Death Count', ascending=False).head(number_of_causes)
+    count = 0
+    while count <= number_of_causes - 1:
+      rows = []
+      cause_of_death = cause_of_deaths_df.iloc[count][0]
+      deaths = int(cause_of_deaths_df.iloc[count][1])
+      rows.append(cause_of_death)
+      rows.append(deaths)
+      cause_of_death_list.append(rows)
+      count += 1 
+    print(cause_of_death_list)
 
 test_object = ExamineData()
-test_object.deadliest_expeditions()
+test_object.top_causes_of_death()
