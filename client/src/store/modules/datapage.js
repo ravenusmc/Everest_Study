@@ -34,8 +34,8 @@ const actions = {
 
 const mutations = {
 
-	setTicketSalesByMovieGenre(state, value) {
-		state.ticketSalesByMovieGenre = value;
+	setDeathsByStates(state, value) {
+		state.deathsByStates = value;
 	},
 
 };
