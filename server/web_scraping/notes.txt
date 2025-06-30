@@ -7,6 +7,19 @@ Ideas for graphs:
 5. Top 3 or 5 causes of death
 6. Top 3 locations for deaths 
 
+Previous Project Help: 
+Graph: 
+https://github.com/ravenusmc/israel_project/blob/main/client/src/components/graphs/Avgage.vue
+
+More: 
+https://github.com/ravenusmc/israel_project/tree/main/client/src/components/graphs
+
+Forms: 
+https://github.com/ravenusmc/israel_project/tree/main/client/src/components/DataPage
+
+https://github.com/ravenusmc/israel_project/blob/main/client/src/components/DataPage/Injuryform.vue
+
+
 Chat GPT ideas: 
 
 Heat Maps:
