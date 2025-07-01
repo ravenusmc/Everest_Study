@@ -1,6 +1,11 @@
 <template>
     <div>
-        <StatesGraph />
+        <div class="filter-div">
+
+        </div>
+        <div class="graphs-div">
+            <StatesGraph />
+        </div>
     </div>
 </template>
 
