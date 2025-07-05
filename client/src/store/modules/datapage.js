@@ -23,13 +23,20 @@ const actions = {
 		const path = 'http://localhost:5000/getDataForGraphs';
 		axios.get(path)
 			.then((res) => {
-				console.log(res.data)
-				commit('setAgeTicketPriceData', res.data)
+				commit('setDeathsByStates', res.data)
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	},
+
+  getDataBasedOnFilters:({commit}, {payload}) => {
+    console.log('Action')
+    console.log(payload)
+    commit()
+
+  }
+  
 };
 
 const mutations = {
