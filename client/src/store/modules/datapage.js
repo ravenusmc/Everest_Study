@@ -31,10 +31,14 @@ const actions = {
 	},
 
   getDataBasedOnFilters:({commit}, {payload}) => {
-    console.log('Action')
-    console.log(payload)
-    commit()
-
+    const path = 'http://localhost:5000/getDataBasedOnFilters';
+		axios.post(path, payload)
+		.then((res) => {
+				commit('setDeathsByStates', res.data)
+		})
+		.catch((error) => {
+			console.log(error);
+		});
   }
   
 };
