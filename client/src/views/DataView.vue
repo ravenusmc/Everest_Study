@@ -5,6 +5,7 @@
         </div>
         <div class="graphs-div">
             <StatesGraph />
+            <DeathsGraph />
         </div>
     </div>
 </template>
@@ -12,12 +13,14 @@
 <script>
 import StateFilter from '@/components/filters/StateFilter.vue'
 import StatesGraph from '@/components/graphs/StatesGraph.vue'
+import DeathsGraph from '@/components/graphs/DeathsGraph.vue'
 
 export default {
 	name: "DataView",
 	components: {
     StatesGraph,
     StateFilter,
+    DeathsGraph,
   },
 };
 

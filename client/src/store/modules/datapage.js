@@ -7,14 +7,26 @@ Vue.use(Vuex);
 
 const data = { 
 	deathsByStates: [
-        ['Nepal', 132], 
-        ['India', 27], 
-        ['Japan', 19]
+      ['Nepal', 132], 
+      ['India', 27], 
+      ['Japan', 19]
     ],
+  deathsByAge: [
+    ['10-19', 2], 
+    ['20-29', 36], 
+    ['30-39', 76], 
+    ['40-49', 54], 
+    ['50-59', 29], 
+    ['60-69', 13], 
+    ['70-79', 0], 
+    ['80-89', 2]
+  ],
+
 };
 
 const getters = {
 	deathsByStates: (state) => state.deathsByStates,
+  deathsByAge: (state) => state.deathsByAge, 
 };
 
 const actions = {
@@ -48,6 +60,10 @@ const mutations = {
 	setDeathsByStates(state, value) {
 		state.deathsByStates = value;
 	},
+
+  setDeathsByAge(state, value) {
+    state.deathsByAge = value 
+  }, 
 
 };
 
