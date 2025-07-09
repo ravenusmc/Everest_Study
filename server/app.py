@@ -16,9 +16,11 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 def getDataBasedOnFilters():
   if request.method == 'POST':
     data_dictionary = {}
-    # get_data_object = ExamineData()
+    get_data_object = ExamineData()
     post_data = request.get_json()
-    print(post_data)
+    print(post_data['numberOfStates'])
+    top_nations = get_data_object.top_nations_data(int(post_data['numberOfStates']))
+    print(top_nations)
     return jsonify(data_dictionary)
 
 if __name__ == '__main__':

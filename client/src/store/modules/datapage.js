@@ -7,10 +7,10 @@ Vue.use(Vuex);
 
 const data = { 
 	deathsByStates: [
-      ['Nepal', 132], 
-      ['India', 27], 
-      ['Japan', 19]
-    ],
+    ['Nepal', 132], 
+    ['India', 27], 
+    ['Japan', 19]
+  ],
   deathsByAge: [
     ['10-19', 2], 
     ['20-29', 36], 

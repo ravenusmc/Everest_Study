@@ -15,6 +15,12 @@ export default {
       "deathsByStates",
     ]),
   },
+  watch: {
+    deathsByStates: {
+      handler: "buildStateGraph",
+      deep: true,
+    },
+  },
   mounted() {
     this.buildStateGraph();
   },  

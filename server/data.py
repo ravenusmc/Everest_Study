@@ -12,10 +12,8 @@ class ExamineData():
     self.data = pd.read_csv('./data/everest_deaths.csv')
   
   #Top 3 nationalies
-  def top_three_nations_data(self, number_of_nations=3): 
+  def top_nations_data(self, number_of_nations): 
     top_nations = []
-    columns = ['Nation', 'Deaths']
-    top_nations.append(columns)
     # Group by Nationality and count number of rows (deaths)
     counts = (
         self.data.groupby('Nationality')
@@ -25,17 +23,17 @@ class ExamineData():
     # Drop missing or empty Nationality values
     counts = counts[counts['Nationality'].notnull() & (counts['Nationality'] != '')]
     # Sort by Death Count descending and take top 3
-    top_three = counts.sort_values(by='Death Count', ascending=False).head(number_of_nations)
+    nations = counts.sort_values(by='Death Count', ascending=False).head(number_of_nations)
     count = 0
     while count <= number_of_nations:
       rows = []
-      state = top_three.iloc[count][0]
-      deaths = int(top_three.iloc[count][1])
+      state = nations.iloc[count][0]
+      deaths = int(nations.iloc[count][1])
       rows.append(state)
       rows.append(deaths)
       top_nations.append(rows)
       count += 1 
-    print(top_nations)
+    return top_nations
     # [['Nation', 'Deaths'], ['Nepal', 132], ['India', 27], ['Japan', 19]]
 
   #Histogram of deaths by age 
@@ -114,5 +112,5 @@ class ExamineData():
       count += 1 
     print(cause_of_death_list)
 
-test_object = ExamineData()
-test_object.deaths_by_age()
+# test_object = ExamineData()
+# test_object.deaths_by_age()
