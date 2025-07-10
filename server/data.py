@@ -25,7 +25,7 @@ class ExamineData():
     # Sort by Death Count descending and take top 3
     nations = counts.sort_values(by='Death Count', ascending=False).head(number_of_nations)
     count = 0
-    while count <= number_of_nations:
+    while count < number_of_nations:
       rows = []
       state = nations.iloc[count][0]
       deaths = int(nations.iloc[count][1])

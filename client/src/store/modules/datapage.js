@@ -46,7 +46,8 @@ const actions = {
     const path = 'http://localhost:5000/getDataBasedOnFilters';
 		axios.post(path, payload)
 		.then((res) => {
-				commit('setDeathsByStates', res.data)
+        console.log(res.data)
+				commit('setDeathsByStates', res.data['top_nations'])
 		})
 		.catch((error) => {
 			console.log(error);
