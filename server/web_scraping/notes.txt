@@ -4,7 +4,7 @@ Ideas for graphs:
 2. Graph of all deaths by age - Data for this graph is done
 3. Top 3 deadliest expeditions - Data for this graph is ready 
 4. Top 3 nationalies - Data for this graph is ready. 
-5. Top 3 or 5 causes of death
+5. Top 3 or 5 causes of death - Data for this graph is ready. 
 6. Top 3 locations for deaths 
 
 Previous Project Help: 

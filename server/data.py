@@ -111,6 +111,9 @@ class ExamineData():
       cause_of_death_list.append(rows)
       count += 1 
     print(cause_of_death_list)
+  
+  def common_months_for_deaths(self):
+    pass
 
 # test_object = ExamineData()
 # test_object.deaths_by_age()
