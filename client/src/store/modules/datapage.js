@@ -21,12 +21,18 @@ const data = {
     ['70-79', 0], 
     ['80-89', 2]
   ],
+  deathsByExpedition: [
+    ['Adventure Consultants', 13], 
+    ['Indian expedition', 9], 
+    ['Asian Trekking', 9]
+  ],
 
 };
 
 const getters = {
 	deathsByStates: (state) => state.deathsByStates,
   deathsByAge: (state) => state.deathsByAge, 
+  deathsByExpedition: (state) => state.deathsByExpedition,
 };
 
 const actions = {
@@ -65,6 +71,10 @@ const mutations = {
   setDeathsByAge(state, value) {
     state.deathsByAge = value 
   }, 
+
+  setDeathsByExpedition(state, value) {
+    state.deathsByExpedition = value
+  }
 
 };
 

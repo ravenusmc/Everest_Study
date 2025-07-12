@@ -65,8 +65,6 @@ class ExamineData():
   #deadliest expeditions 
   def deadliest_expeditions(self, number_of_expeditions=3):
     expeditions_list = []
-    columns = ['Expeditions', 'Deaths']
-    expeditions_list.append(columns)
     # Group by Nationality and count number of rows (deaths)
     counts = (
         self.data.groupby('Expedition')
@@ -86,7 +84,7 @@ class ExamineData():
       rows.append(deaths)
       expeditions_list.append(rows)
       count += 1 
-    print(expeditions)
+    print(expeditions_list)
   
   def top_causes_of_death(self, number_of_causes=3):
     cause_of_death_list = []
@@ -116,4 +114,4 @@ class ExamineData():
     pass
 
 # test_object = ExamineData()
-# test_object.deaths_by_age()
+# test_object.deadliest_expeditions()

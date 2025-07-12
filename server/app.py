@@ -18,7 +18,6 @@ def getDataBasedOnFilters():
     data_dictionary = {}
     get_data_object = ExamineData()
     post_data = request.get_json()
-    print(post_data['numberOfStates'])
     top_nations = get_data_object.top_nations_data(int(post_data['numberOfStates']))
     data_dictionary['top_nations'] = top_nations
     return jsonify(data_dictionary)
