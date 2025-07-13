@@ -101,7 +101,7 @@ export default {
         .attr("y", height) // Initial position at the bottom of the chart
         .attr("width", x.bandwidth())
         .attr("height", 0) // Initial height 0 (so it grows with the animation)
-        .attr("fill", "#0B90CA")
+        .attr("fill", "#121212")
         .on("mouseover", showTooltip)
         .on("mousemove", moveTooltip)
         .on("mouseleave", hideTooltip)

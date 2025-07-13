@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import StateFilter from '@/components/filters/StateFilter.vue'
+import StateFilter from '@/components/filters/MainFilter.vue'
 import StatesGraph from '@/components/graphs/StatesGraph.vue'
 import DeathsGraph from '@/components/graphs/DeathsGraph.vue'
 import ExpeditionsGraph from '@/components/graphs/ExpeditionsGraph.vue'
