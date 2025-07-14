@@ -1,12 +1,16 @@
 <template>
     <div>
       <div ref="statesGraph"></div>
+      <div id="popup">
+        <p id="popupContent"></p>
+        <button @click="closePopup">Close</button>
+      </div>
     </div>
 </template>
 
 <script>
 import * as d3 from "d3";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "StatesGraph",
@@ -25,6 +29,15 @@ export default {
     this.buildStateGraph();
   },  
   methods: {
+    ...mapActions("datapage", ["getStatesGraphDrillDownData"]),
+    async handleBarClick(d) {
+      console.log(d)
+      //Prepare the payload
+     // const payload = { state: d[0] };
+
+      // // Await the response from the testMe action
+      //const response = await this.getStatesGraphDrillDownData({ payload });
+    },
     buildStateGraph() {
 
       // Clear previous SVG elements
@@ -108,6 +121,9 @@ export default {
         .attr("width", x.bandwidth())
         .attr("height", 0) // Initial height 0 (so it grows with the animation)
         .attr("fill", "#121212")
+        .on("click", async (event, d) => {
+          await this.handleBarClick(d);
+        })
         .on("mouseover", showTooltip)
         .on("mousemove", moveTooltip)
         .on("mouseleave", hideTooltip)
@@ -152,3 +168,18 @@ export default {
 }
 
 </script>
+
+<style scoped>
+#popup {
+  z-index: 1000;
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>

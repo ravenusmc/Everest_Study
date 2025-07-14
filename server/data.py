@@ -37,29 +37,23 @@ class ExamineData():
     # [['Nation', 'Deaths'], ['Nepal', 132], ['India', 27], ['Japan', 19]]
 
   #Histogram of deaths by age 
-  def deaths_by_age(self, bin_size=10):
+  def deaths_by_age(self, bin_size):
       # Ensure Age column is numeric
       self.data['Age'] = pd.to_numeric(self.data['Age'], errors='coerce')
-      
       # Drop rows where Age is NaN
       age_data = self.data.dropna(subset=['Age'])
-      
       # Create bins
       min_age = int(age_data['Age'].min()) // bin_size * bin_size
       max_age = int(age_data['Age'].max()) // bin_size * bin_size + bin_size
       bins = list(range(min_age, max_age + bin_size, bin_size))
-      
       # Create labels like "10-19", "20-29", etc.
       labels = [f"{b}-{b + bin_size - 1}" for b in bins[:-1]]
-      
       # Cut into bins
       age_data['Age Group'] = pd.cut(age_data['Age'], bins=bins, labels=labels, right=True)
-      
       # Count per bin and convert to desired format
       counts = age_data['Age Group'].value_counts().sort_index()
-      result = [[label, int(counts[label])] for label in labels]
-      print(result)
-      return result
+      bins_for_age_graph = [[label, int(counts[label])] for label in labels]
+      return bins_for_age_graph
 
   
   #deadliest expeditions 

@@ -54,6 +54,7 @@ const actions = {
 		.then((res) => {
         console.log(res.data)
 				commit('setDeathsByStates', res.data['top_nations'])
+        commit('setDeathsByAge', res.data['bins_for_age_graph'])
 		})
 		.catch((error) => {
 			console.log(error);

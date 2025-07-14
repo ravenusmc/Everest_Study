@@ -18,8 +18,12 @@ def getDataBasedOnFilters():
     data_dictionary = {}
     get_data_object = ExamineData()
     post_data = request.get_json()
-    top_nations = get_data_object.top_nations_data(int(post_data['numberOfStates']))
+    print(post_data)
+    top_nations = get_data_object.top_nations_data(post_data['numberOfStates'])
     data_dictionary['top_nations'] = top_nations
+    bins_for_age_graph = get_data_object.deaths_by_age(post_data['numberOfBins'])
+    data_dictionary['bins_for_age_graph'] = bins_for_age_graph
+    print(bins_for_age_graph)
     return jsonify(data_dictionary)
 
 if __name__ == '__main__':

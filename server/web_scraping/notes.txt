@@ -43,3 +43,17 @@ Pie Chart or Bar Plot: Proportion of deaths by cause (avalanche, fall, exposure,
 Stacked Bar: Number of deaths by nationality over time.
 
 Map Plot: If you can geo-locate the Location, a map heat map could show dangerous spots on Everest.
+
+
+Drill Down code: 
+https://github.com/ravenusmc/missing_411_project/blob/main/client/src/components/graphs/TopFiveGraphs.vue
+
+https://github.com/ravenusmc/missing_411_project/blob/main/client/src/components/graphs/Old.vue
+
+Old Code: 
+
+<!-- May go back to the input...not sure-->
+<!-- <div>
+    <label>Enter Number of States to see:</label>
+    <input v-model="numberOfStates" />
+</div> -->

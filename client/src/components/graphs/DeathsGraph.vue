@@ -15,6 +15,12 @@ export default {
       "deathsByAge",
     ]),
   },
+  watch: {
+    deathsByAge: {
+      handler: "buildDeathGraph",
+      deep: true,
+    },
+  },
   mounted() {
     this.buildDeathGraph();
   }, 

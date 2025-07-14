@@ -1,11 +1,6 @@
 <template>
     <div>
       <form>
-        <!-- May go back to the input...not sure-->
-        <!-- <div>
-          <label>Enter Number of States to see:</label>
-          <input v-model="numberOfStates" />
-        </div> -->
         <div>
           <label for="ammo">Select Number of States to See:</label>
           <select v-model="numberOfStates">
@@ -19,7 +14,7 @@
           <label>Enter Number of bins for range of years:</label>
           <select v-model="numberOfBins">
             <option disabled value="">Please select one</option>
-            <option v-for="bins in numberOfStatesOptions" :key="bins" :value="bins">
+            <option v-for="bins in numberOfBinsOptions" :key="bins" :value="bins">
               {{ bins }}
             </option>
           </select>
@@ -39,8 +34,8 @@ export default {
   data() {
     return {
       numberOfStatesOptions: [1,2,3,4,5,6,7,8,9,10],
-      numberOfStates: 3, // or a default like 5
-      numberOfBinsOptions: [2,3,4,5,6,7,8,9,10],
+      numberOfStates: 3, 
+      numberOfBinsOptions: [5,10,12,15,18,21],
       numberOfBins: 10,
     };
   },
