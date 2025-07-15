@@ -31,12 +31,13 @@ export default {
   methods: {
     ...mapActions("datapage", ["getStatesGraphDrillDownData"]),
     async handleBarClick(d) {
-      console.log(d)
-      //Prepare the payload
-     // const payload = { state: d[0] };
 
-      // // Await the response from the testMe action
-      //const response = await this.getStatesGraphDrillDownData({ payload });
+      //Prepare the payload
+     const payload = { state: d[0] };
+
+      // Await the response from the testMe action
+      const response = await this.getStatesGraphDrillDownData({ payload });
+      console.log(response)
     },
     buildStateGraph() {
 

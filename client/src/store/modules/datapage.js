@@ -26,6 +26,7 @@ const data = {
     ['Indian expedition', 9], 
     ['Asian Trekking', 9]
   ],
+  stateDeathsDrillDown: [],
 
 };
 
@@ -59,7 +60,12 @@ const actions = {
 		.catch((error) => {
 			console.log(error);
 		});
-  }
+  },
+
+  getStatesGraphDrillDownData: ({commit}, {payload}) => {
+    console.log(payload)
+    commit('setStatesDeathsDrillDown', 5)
+  },
   
 };
 
@@ -75,6 +81,11 @@ const mutations = {
 
   setDeathsByExpedition(state, value) {
     state.deathsByExpedition = value
+  },
+
+  // Mutations for the drill down tables
+  setStatesDeathsDrillDown(state, value) {
+    state.stateDeathsDrillDown = value
   }
 
 };
