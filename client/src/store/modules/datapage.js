@@ -64,7 +64,16 @@ const actions = {
 
   getStatesGraphDrillDownData: ({commit}, {payload}) => {
     console.log(payload)
-    commit('setStatesDeathsDrillDown', 5)
+    const path = 'http://localhost:5000/getDataForDrillDown';
+    axios.post(path, payload)
+		.then((res) => {
+        console.log(res.data)
+				commit('setStatesDeathsDrillDown', 5)
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+    
   },
   
 };
