@@ -63,7 +63,6 @@ const actions = {
   },
 
   getStatesGraphDrillDownData: ({commit}, {payload}) => {
-    console.log(payload)
     const path = 'http://localhost:5000/getDataForDrillDown';
     axios.post(path, payload)
 		.then((res) => {

@@ -26,5 +26,14 @@ def getDataBasedOnFilters():
     print(bins_for_age_graph)
     return jsonify(data_dictionary)
 
+@app.route('/getDataForDrillDown', methods=['GET', 'POST'])
+def getDataForDrillDown():
+  if request.method == 'POST':
+    data_dictionary_drilldown = {}
+    get_data_object = ExamineData()
+    post_data = request.get_json()
+    print(post_data)
+    return jsonify(data_dictionary_drilldown)
+
 if __name__ == '__main__':
   app.run(debug=True)
