@@ -36,6 +36,10 @@ class ExamineData():
     return top_nations
     # [['Nation', 'Deaths'], ['Nepal', 132], ['India', 27], ['Japan', 19]]
 
+  def drilldown_states_graph(self, selected_state):
+    drilldown_data = []
+    grouped_data = self.data.groupby('Nationality')
+
   #Histogram of deaths by age 
   def deaths_by_age(self, bin_size):
       # Ensure Age column is numeric
@@ -59,7 +63,7 @@ class ExamineData():
   #deadliest expeditions 
   def deadliest_expeditions(self, number_of_expeditions=3):
     expeditions_list = []
-    # Group by Nationality and count number of rows (deaths)
+    # Group by Nationality
     counts = (
         self.data.groupby('Expedition')
         .size()
