@@ -39,6 +39,9 @@ class ExamineData():
   def drilldown_states_graph(self, selected_state):
     drilldown_data = []
     grouped_data = self.data.groupby('Nationality')
+    # Drop missing or empty Nationality values
+    counts = grouped_data[grouped_data['Nationality'].notnull() & (grouped_data['Nationality'] != '')]
+    print(counts)
 
   #Histogram of deaths by age 
   def deaths_by_age(self, bin_size):

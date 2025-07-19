@@ -33,6 +33,7 @@ def getDataForDrillDown():
     get_data_object = ExamineData()
     post_data = request.get_json()
     print(post_data)
+    state_individuals = get_data_object.drilldown_states_graph(post_data['state'])
     return jsonify(data_dictionary_drilldown)
 
 if __name__ == '__main__':
