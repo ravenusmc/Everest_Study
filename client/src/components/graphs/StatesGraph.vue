@@ -29,15 +29,59 @@ export default {
     this.buildStateGraph();
   },  
   methods: {
-    ...mapActions("datapage", ["getStatesGraphDrillDownData"]),
+    ...mapActions("datapage", ["getDataForDrillDown"]),
     async handleBarClick(d) {
 
       //Prepare the payload
-     const payload = { state: d[0] };
-
+      const payload = { state: d[0] };
+      console.log(payload)
       // Await the response from the testMe action
-      const response = await this.getStatesGraphDrillDownData({ payload });
-      console.log(response)
+      const response = await this.getDataForDrillDown(payload);
+
+      //Function to create a table from JSON data
+      function createTableFromJson(data) {
+        console.log("Data received in createTableFromJson:", data);
+        console.log("Type of data:", typeof data);
+        let table =
+          '<table border="1" cellpadding="4" cellspacing="0">' +
+          '<tr><th>First Name</th><th>Last Name</th><th>Age</th><th>Year Missing</th><th>State</th></tr>';
+
+        data.forEach((row) => {
+          console.log(row)
+          // Split name into first and last
+          let nameParts = row.Name ? row.Name.split(' ') : ['Unknown', ''];
+          let firstName = nameParts.slice(0, -1).join(' ') || 'Unknown';
+          let lastName = nameParts.slice(-1).join(' ') || '';
+
+          // Extract year from date
+          let year = row.Date ? new Date(row.Date).getFullYear() : 'Unknown';
+
+          // Handle missing fields
+          let age = row.Age !== null && row.Age !== undefined && row.Age !== 'nan' ? row.Age : 'Unknown';
+          let state = row.Nationality || 'Unknown';
+
+          // Add row to table
+          table += `<tr>
+                      <td>${firstName}</td>
+                      <td>${lastName}</td>
+                      <td>${age}</td>
+                      <td>${year}</td>
+                      <td>${state}</td>
+                    </tr>`;
+        });
+
+        table += "</table>";
+        return table;
+      }
+
+      // Display the popup with the count and response
+      const popup = document.getElementById("popup");
+      const content = document.getElementById("popupContent");
+      content.innerHTML = `${'Missing people in ' + d[0]}<br>${createTableFromJson(response)}`;
+
+      popup.style.display = "block";
+      popup.style.top = `${event.clientY + 10}px`;
+      popup.style.left = `${event.clientX + 10}px`;
     },
     buildStateGraph() {
 
@@ -163,7 +207,12 @@ export default {
         .attr("font-size", "16px")
         .attr("font-weight", "bold")
         .text("Deaths by Nation-State");
-    }
+    },
+
+    closePopup() {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
+    },
   },
 
 }

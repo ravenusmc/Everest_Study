@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import math
 
 # Importing files that I made:
 from data import *
@@ -26,15 +27,21 @@ def getDataBasedOnFilters():
     print(bins_for_age_graph)
     return jsonify(data_dictionary)
 
-@app.route('/getDataForDrillDown', methods=['GET', 'POST'])
-def getDataForDrillDown():
-  if request.method == 'POST':
-    data_dictionary_drilldown = {}
-    get_data_object = ExamineData()
-    post_data = request.get_json()
-    print(post_data)
-    state_individuals = get_data_object.drilldown_states_graph(post_data['state'])
-    return jsonify(data_dictionary_drilldown)
+
+@app.route('/getDataForDrillDownGraphs', methods=['GET', 'POST'])
+def getDataForDrillDownGraphs():
+    if request.method == 'POST':
+      get_data_object = ExamineData()
+      post_data = request.get_json()
+      print(post_data)
+      state_individuals = get_data_object.drilldown_states_graph(post_data['state'])
+      for record in state_individuals:
+        for k, v in record.items():
+            if isinstance(v, float) and math.isnan(v):
+                print(f"NAN DETECTED: {record}")
+      print(state_individuals)
+      return jsonify(state_individuals) 
+
 
 if __name__ == '__main__':
   app.run(debug=True)

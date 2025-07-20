@@ -57,3 +57,16 @@ Old Code:
     <label>Enter Number of States to see:</label>
     <input v-model="numberOfStates" />
 </div> -->
+
+
+  async getDataForDrillDown(payload) {
+    console.log('Action')
+    console.log(payload)
+    try {
+      const res = await axios.post('http://localhost:5000/getDataForDrillDown', payload);
+      return res.data
+    }catch (error) {
+			console.error('Error in drilldown action:', error);
+			throw error;
+		}
+  },

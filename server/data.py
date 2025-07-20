@@ -37,11 +37,28 @@ class ExamineData():
     # [['Nation', 'Deaths'], ['Nepal', 132], ['India', 27], ['Japan', 19]]
 
   def drilldown_states_graph(self, selected_state):
-    drilldown_data = []
-    grouped_data = self.data.groupby('Nationality')
-    # Drop missing or empty Nationality values
-    counts = grouped_data[grouped_data['Nationality'].notnull() & (grouped_data['Nationality'] != '')]
-    print(counts)
+      filtered = self.data[
+          (self.data['Nationality'] == selected_state) &
+          (self.data['Nationality'].notnull()) &
+          (self.data['Nationality'] != '')
+      ]
+
+      selected_columns = [
+          'Name', 'Date', 'Age', 'Expedition',
+          'Cause_of_Death', 'Location', 'Remains status'
+      ]
+      filtered = filtered[selected_columns]
+
+      # Convert to list of dictionaries
+      drilldown_data = filtered.to_dict(orient='records')
+
+      # Replace all NaNs with None
+      for row in drilldown_data:
+          for key in row:
+              if pd.isna(row[key]):
+                  row[key] = None
+
+      return drilldown_data
 
   #Histogram of deaths by age 
   def deaths_by_age(self, bin_size):
