@@ -209,6 +209,7 @@ export default {
         .text("Deaths by Nation-State");
     },
 
+    //Code to deal with the popup
     closePopup() {
       const popup = document.getElementById("popup");
       popup.style.display = "none";
