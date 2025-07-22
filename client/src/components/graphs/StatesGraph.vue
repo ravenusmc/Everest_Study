@@ -44,7 +44,7 @@ export default {
         console.log("Type of data:", typeof data);
         let table =
           '<table border="1" cellpadding="4" cellspacing="0">' +
-          '<tr><th>First Name</th><th>Last Name</th><th>Age</th><th>Year Missing</th><th>State</th></tr>';
+          '<tr><th>First Name</th><th>Last Name</th><th>Age</th><th>Year Missing</th></tr>';
 
         data.forEach((row) => {
           console.log(row)
@@ -58,7 +58,6 @@ export default {
 
           // Handle missing fields
           let age = row.Age !== null && row.Age !== undefined && row.Age !== 'nan' ? row.Age : 'Unknown';
-          let state = row.Nationality || 'Unknown';
 
           // Add row to table
           table += `<tr>
@@ -66,7 +65,6 @@ export default {
                       <td>${lastName}</td>
                       <td>${age}</td>
                       <td>${year}</td>
-                      <td>${state}</td>
                     </tr>`;
         });
 
@@ -77,7 +75,7 @@ export default {
       // Display the popup with the count and response
       const popup = document.getElementById("popup");
       const content = document.getElementById("popupContent");
-      content.innerHTML = `${'Missing people in ' + d[0]}<br>${createTableFromJson(response)}`;
+      content.innerHTML = `${'Missing people from ' + d[0]}<br>${createTableFromJson(response)}`;
 
       popup.style.display = "block";
       popup.style.top = `${event.clientY + 10}px`;
@@ -225,12 +223,16 @@ export default {
   z-index: 1000;
   display: none;
   position: fixed;
-  top: 20%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
   border: 1px solid #ccc;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  max-height: 70vh;       /* restrict height to viewport height */
+  max-width: 90vw;        /* optional: prevent it from going too wide */
+  overflow: auto;         /* enables scrollbars when content overflows */
 }
 </style>
