@@ -2,7 +2,7 @@
     <div>
       <div ref="statesGraph"></div>
       <div id="popup">
-        <p id="popupContent"></p>
+        <div id="popupContent" class="popup-scroll"></div>
         <button @click="closePopup">Close</button>
       </div>
     </div>
@@ -229,10 +229,29 @@ export default {
   background: white;
   border: 1px solid #ccc;
   padding: 20px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: hidden;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  max-height: 70vh;       /* restrict height to viewport height */
-  max-width: 90vw;        /* optional: prevent it from going too wide */
-  overflow: auto;         /* enables scrollbars when content overflows */
+.popup-scroll {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+#popup table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#popup th, #popup td {
+  padding: 8px;
+  text-align: left;
+}
+
+#popup th {
+  background-color: #f2f2f2;
 }
 </style>
