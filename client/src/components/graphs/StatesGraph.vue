@@ -40,18 +40,16 @@ export default {
 
       //Function to create a table from JSON data
       function createTableFromJson(data) {
-        console.log("Data received in createTableFromJson:", data);
-        console.log("Type of data:", typeof data);
         let table =
           '<table border="1" cellpadding="4" cellspacing="0">' +
-          '<tr><th>First Name</th><th>Last Name</th><th>Age</th><th>Year Missing</th></tr>';
+          '<tr><th>Name</th><th>Age</th><th>Year Missing</th><th>Cause of Death</th></tr>';
 
         data.forEach((row) => {
-          console.log(row)
+
           // Split name into first and last
-          let nameParts = row.Name ? row.Name.split(' ') : ['Unknown', ''];
-          let firstName = nameParts.slice(0, -1).join(' ') || 'Unknown';
-          let lastName = nameParts.slice(-1).join(' ') || '';
+          // let nameParts = row.Name ? row.Name.split(' ') : ['Unknown', ''];
+          // let firstName = nameParts.slice(0, -1).join(' ') || 'Unknown';
+          // let lastName = nameParts.slice(-1).join(' ') || '';
 
           // Extract year from date
           let year = row.Date ? new Date(row.Date).getFullYear() : 'Unknown';
@@ -61,10 +59,10 @@ export default {
 
           // Add row to table
           table += `<tr>
-                      <td>${firstName}</td>
-                      <td>${lastName}</td>
+                      <td>${row.Name}</td>
                       <td>${age}</td>
                       <td>${year}</td>
+                      <td>${row.Cause_of_Death}</td>
                     </tr>`;
         });
 

@@ -33,13 +33,8 @@ def getDataForDrillDownGraphs():
     if request.method == 'POST':
       get_data_object = ExamineData()
       post_data = request.get_json()
-      print(post_data)
+      # print(post_data)
       state_individuals = get_data_object.drilldown_states_graph(post_data['state'])
-      for record in state_individuals:
-        for k, v in record.items():
-            if isinstance(v, float) and math.isnan(v):
-                print(f"NAN DETECTED: {record}")
-      print(state_individuals)
       return jsonify(state_individuals) 
 
 

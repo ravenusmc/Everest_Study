@@ -70,3 +70,48 @@ Old Code:
 			throw error;
 		}
   },
+
+
+Age
+: 
+"45"
+Cause_of_Death
+: 
+"Altitude sickness"
+Date
+: 
+"May 15, 2025"
+Expedition
+: 
+"Snowy Horizon Treks"
+Location
+: 
+"Hillary Step"
+Remains status
+: 
+"Died while descending, waiting for recovery"
+
+Age
+: 
+"45"
+Cause_of_Death
+: 
+"Altitude sickness"
+Date
+: 
+"May 15, 2025"
+Expedition
+: 
+"Snowy Horizon Treks"
+Location
+: 
+"Hillary Step"
+Name
+: 
+"Subrata Ghosh"
+Remains status
+: 
+"Died while descending, waiting for recovery"
+[[Prototype]]
+: 
+Object
