@@ -72,18 +72,7 @@ Old Code:
   },
 
 
-Age
-: 
-"45"
-Cause_of_Death
-: 
-"Altitude sickness"
-Date
-: 
-"May 15, 2025"
-Expedition
-: 
-"Snowy Horizon Treks"
+
 Location
 : 
 "Hillary Step"

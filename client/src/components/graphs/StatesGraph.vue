@@ -42,7 +42,9 @@ export default {
       function createTableFromJson(data) {
         let table =
           '<table border="1" cellpadding="4" cellspacing="0">' +
-          '<tr><th>Name</th><th>Age</th><th>Year Missing</th><th>Cause of Death</th></tr>';
+          '<tr><th>Name</th><th>Age</th><th>Year Missing</th>' +
+          '<th>Expedition</th><th>Cause of Death</th><th>Location</th>'+ 
+          '</tr>';
 
         data.forEach((row) => {
 
@@ -62,7 +64,9 @@ export default {
                       <td>${row.Name}</td>
                       <td>${age}</td>
                       <td>${year}</td>
+                      <td>${row.Expedition}</td>
                       <td>${row.Cause_of_Death}</td>
+                      <td>${row.Location}</td>
                     </tr>`;
         });
 
