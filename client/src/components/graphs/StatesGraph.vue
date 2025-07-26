@@ -34,7 +34,7 @@ export default {
 
       //Prepare the payload
       const payload = { state: d[0] };
-      console.log(payload)
+
       // Await the response from the testMe action
       const response = await this.getDataForDrillDown(payload);
 
@@ -48,7 +48,8 @@ export default {
 
         data.forEach((row) => {
 
-          // Split name into first and last
+          // Split name into first and last - not going to use this but keeping this 
+          // in case I change my mind.
           // let nameParts = row.Name ? row.Name.split(' ') : ['Unknown', ''];
           // let firstName = nameParts.slice(0, -1).join(' ') || 'Unknown';
           // let lastName = nameParts.slice(-1).join(' ') || '';

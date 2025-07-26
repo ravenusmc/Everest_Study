@@ -1,12 +1,16 @@
 <template>
     <div>
         <div ref="deathsGraph"></div>
+        <div id="popup">
+          <div id="popupContent" class="popup-scroll"></div>
+          <button @click="closePopup">Close</button>
+      </div>
     </div>
 </template>
 
 <script>
 import * as d3 from "d3";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "DeathsGraph",
@@ -25,6 +29,61 @@ export default {
     this.buildDeathGraph();
   }, 
   methods: {
+    ...mapActions("datapage", ["getDataForDrillDown"]),
+    async handleBarClick(d) {
+
+      //Prepare the payload
+      const payload = { age_group: d[0] };
+      console.log(payload)
+      // Await the response from the testMe action
+      // const response = await this.getDataForDrillDown(payload);
+
+      // //Function to create a table from JSON data
+      // function createTableFromJson(data) {
+      //   let table =
+      //     '<table border="1" cellpadding="4" cellspacing="0">' +
+      //     '<tr><th>Name</th><th>Age</th><th>Year Missing</th>' +
+      //     '<th>Expedition</th><th>Cause of Death</th><th>Location</th>'+ 
+      //     '</tr>';
+
+      //   data.forEach((row) => {
+
+      //     // Split name into first and last - not going to use this but keeping this 
+      //     // in case I change my mind. 
+      //     // let nameParts = row.Name ? row.Name.split(' ') : ['Unknown', ''];
+      //     // let firstName = nameParts.slice(0, -1).join(' ') || 'Unknown';
+      //     // let lastName = nameParts.slice(-1).join(' ') || '';
+
+      //     // Extract year from date
+      //     let year = row.Date ? new Date(row.Date).getFullYear() : 'Unknown';
+
+      //     // Handle missing fields
+      //     let age = row.Age !== null && row.Age !== undefined && row.Age !== 'nan' ? row.Age : 'Unknown';
+
+      //     // Add row to table
+      //     table += `<tr>
+      //                 <td>${row.Name}</td>
+      //                 <td>${age}</td>
+      //                 <td>${year}</td>
+      //                 <td>${row.Expedition}</td>
+      //                 <td>${row.Cause_of_Death}</td>
+      //                 <td>${row.Location}</td>
+      //               </tr>`;
+      //   });
+
+      //   table += "</table>";
+      //   return table;
+      // }
+
+      // Display the popup with the count and response
+      // const popup = document.getElementById("popup");
+      // const content = document.getElementById("popupContent");
+      // content.innerHTML = `${'Missing people from ' + d[0]}<br>${createTableFromJson(response)}`;
+
+      // popup.style.display = "block";
+      // popup.style.top = `${event.clientY + 10}px`;
+      // popup.style.left = `${event.clientX + 10}px`;
+    },
     buildDeathGraph() {
       
       // Clear previous SVG elements
@@ -108,6 +167,9 @@ export default {
         .attr("width", x.bandwidth())
         .attr("height", 0) // Initial height 0 (so it grows with the animation)
         .attr("fill", "#121212")
+        .on("click", async (event, d) => {
+          await this.handleBarClick(d);
+        })
         .on("mouseover", showTooltip)
         .on("mousemove", moveTooltip)
         .on("mouseleave", hideTooltip)
@@ -147,8 +209,52 @@ export default {
         .attr("font-weight", "bold")
         .text("Deaths by Age Group");
 
-    }
+    },
+    
+    //Code to deal with the popup
+    closePopup() {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
+    },
   } 
 }
 
 </script>
+
+<style scoped>
+#popup {
+  z-index: 1000;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-scroll {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+#popup table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#popup th, #popup td {
+  padding: 8px;
+  text-align: left;
+}
+
+#popup th {
+  background-color: #f2f2f2;
+}
+</style>
