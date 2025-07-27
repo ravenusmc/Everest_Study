@@ -33,59 +33,50 @@ export default {
     async handleBarClick(d) {
 
       //Prepare the payload
-      const payload = { 
-        state: d[0], 
-        graphName: 'deathsByAgeGraph'
-      };
+      const payload = { ageGroup: d[0]};
 
       // Await the response from the testMe action
       const response = await this.getDataForDrillDown(payload);
       console.log(response)
-      // //Function to create a table from JSON data
-      // function createTableFromJson(data) {
-      //   let table =
-      //     '<table border="1" cellpadding="4" cellspacing="0">' +
-      //     '<tr><th>Name</th><th>Age</th><th>Year Missing</th>' +
-      //     '<th>Expedition</th><th>Cause of Death</th><th>Location</th>'+ 
-      //     '</tr>';
+      //Function to create a table from JSON data
+      function createTableFromJson(data) {
+        let table =
+          '<table border="1" cellpadding="4" cellspacing="0">' +
+          '<tr><th>Name</th><th>Age</th><th>Year Missing</th>' +
+          '<th>Expedition</th><th>Cause of Death</th><th>Location</th>'+ 
+          '</tr>';
 
-      //   data.forEach((row) => {
+        data.forEach((row) => {
 
-      //     // Split name into first and last - not going to use this but keeping this 
-      //     // in case I change my mind. 
-      //     // let nameParts = row.Name ? row.Name.split(' ') : ['Unknown', ''];
-      //     // let firstName = nameParts.slice(0, -1).join(' ') || 'Unknown';
-      //     // let lastName = nameParts.slice(-1).join(' ') || '';
+          // Extract year from date
+          let year = row.Date ? new Date(row.Date).getFullYear() : 'Unknown';
 
-      //     // Extract year from date
-      //     let year = row.Date ? new Date(row.Date).getFullYear() : 'Unknown';
+          // Handle missing fields
+          let age = row.Age !== null && row.Age !== undefined && row.Age !== 'nan' ? row.Age : 'Unknown';
 
-      //     // Handle missing fields
-      //     let age = row.Age !== null && row.Age !== undefined && row.Age !== 'nan' ? row.Age : 'Unknown';
+          // Add row to table
+          table += `<tr>
+                      <td>${row.Name}</td>
+                      <td>${age}</td>
+                      <td>${year}</td>
+                      <td>${row.Expedition}</td>
+                      <td>${row.Cause_of_Death}</td>
+                      <td>${row.Location}</td>
+                    </tr>`;
+        });
 
-      //     // Add row to table
-      //     table += `<tr>
-      //                 <td>${row.Name}</td>
-      //                 <td>${age}</td>
-      //                 <td>${year}</td>
-      //                 <td>${row.Expedition}</td>
-      //                 <td>${row.Cause_of_Death}</td>
-      //                 <td>${row.Location}</td>
-      //               </tr>`;
-      //   });
-
-      //   table += "</table>";
-      //   return table;
-      // }
+        table += "</table>";
+        return table;
+      }
 
       // Display the popup with the count and response
-      // const popup = document.getElementById("popup");
-      // const content = document.getElementById("popupContent");
-      // content.innerHTML = `${'Missing people from ' + d[0]}<br>${createTableFromJson(response)}`;
+      const popup = document.getElementById("popup");
+      const content = document.getElementById("popupContent");
+      content.innerHTML = `${'Missing people from ' + d[0]}<br>${createTableFromJson(response)}`;
 
-      // popup.style.display = "block";
-      // popup.style.top = `${event.clientY + 10}px`;
-      // popup.style.left = `${event.clientX + 10}px`;
+      popup.style.display = "block";
+      popup.style.top = `${event.clientY + 10}px`;
+      popup.style.left = `${event.clientX + 10}px`;
     },
     buildDeathGraph() {
       

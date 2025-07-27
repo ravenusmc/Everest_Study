@@ -79,8 +79,28 @@ class ExamineData():
       bins_for_age_graph = [[label, int(counts[label])] for label in labels]
       return bins_for_age_graph
   
-  def drilldown_deaths_by_age_graph(self, post_data):
-     pass
+  def drilldown_deaths_by_age_graph(self, age_group):
+    # Extract lower and upper bounds from string like '40-49'
+    try:
+        lower, upper = map(int, age_group.split('-'))
+    except ValueError:
+        raise ValueError("age_group must be a string like '40-49'")
+    # Ensure Age is numeric
+    self.data['Age'] = pd.to_numeric(self.data['Age'], errors='coerce')
+    # Filter by age range
+    filtered_df = self.data[
+        (self.data['Age'] >= lower) & (self.data['Age'] <= upper)
+    ]
+    # Select desired columns
+    selected_columns = [
+        'Name', 'Date', 'Age', 'Expedition',
+        'Cause_of_Death', 'Location', 'Remains status'
+    ]
+    result = filtered_df[selected_columns].copy()
+    # Optional: fill missing with 'Unknown'
+    result = result.fillna('Unknown')
+    # Return as list of dicts for easy use in frontend
+    return result.to_dict(orient='records')
 
   
   #deadliest expeditions 
