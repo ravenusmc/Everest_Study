@@ -78,6 +78,9 @@ class ExamineData():
       counts = age_data['Age Group'].value_counts().sort_index()
       bins_for_age_graph = [[label, int(counts[label])] for label in labels]
       return bins_for_age_graph
+  
+  def drilldown_deaths_by_age_graph(self, post_data):
+     pass
 
   
   #deadliest expeditions 

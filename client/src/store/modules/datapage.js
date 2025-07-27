@@ -62,41 +62,17 @@ const actions = {
 		});
   },
 
-  // getDataForDrillDown: ({commit}, {payload}) => {
-  //   const path = 'http://localhost:5000/getDataForDrillDownGraphs';
-  //   axios.post(path, payload)
-	// 	.then((res) => {
-	// 			commit('setStatesDeathsDrillDown', 5)
-  //       return res.data
-	// 	})
-	// 	.catch((error) => {
-	// 		console.log(error);
-	// 	});
-  // },
-
-  async getDataForDrillDown ({commit}, payload) {
-    console.log(payload)
+  async getDataForDrillDown (_, payload) {
     try {
 			// Perform an asynchronous operation, for example, an API call
 			const res = await axios.post('http://localhost:5000/getDataForDrillDownGraphs', payload);
 			// Return the data from the response
-      commit('setStatesDeathsDrillDown', 5)
+      // commit('setStatesDeathsDrillDown', 5)
 			return res.data;
 		} catch (error) {
 			console.error('Error in drilldown action:', error);
 			throw error;
 		}
-    // const path = 'http://localhost:5000/getDataForDrillDownGraphs';
-    // axios.post(path, payload)
-		// .then((res) => {
-    //     console.log(res.data)
-		// 		commit('setStatesDeathsDrillDown', 5)
-    //     return res.data
-		// })
-		// .catch((error) => {
-		// 	console.log(error);
-		// });
-
   },
   
 };

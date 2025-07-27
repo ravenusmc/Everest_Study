@@ -33,7 +33,10 @@ export default {
     async handleBarClick(d) {
 
       //Prepare the payload
-      const payload = { state: d[0] };
+      const payload = { 
+        state: d[0], 
+        graphName: 'statesGraph'
+      };
 
       // Await the response from the testMe action
       const response = await this.getDataForDrillDown(payload);
