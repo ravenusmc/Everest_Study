@@ -19,6 +19,25 @@
             </option>
           </select>
         </div>
+        <div>
+          <label for="startDate">Start Date:</label>
+            <input
+              type="date"
+              id="startDate"
+              v-model="startDate"
+              :min="minDate"
+              :max="maxDate"
+            /><br><br>
+
+            <label for="endDate">End Date:</label>
+            <input
+              type="date"
+              id="endDate"
+              v-model="endDate"
+              :min="minDate"
+              :max="maxDate"
+            /><br><br>
+        </div>
         <div class="form-group">
           <button class='styled-button' type="button" @click="submitNumberStatesToServer">Submit</button>
         </div>
@@ -37,12 +56,17 @@ export default {
       numberOfStates: 3, 
       numberOfBinsOptions: [5,10,12,15,18,21],
       numberOfBins: 10,
+      startDate: "",
+      endDate: "",
+      minDate: "1921-06-05",
+      maxDate: "2025-05-15",
     };
   },
   methods: {
     ...mapActions("datapage", ["getDataBasedOnFilters"]),
     submitNumberStatesToServer() {
       event.preventDefault();
+      console.log(this.startDate)
       if (this.numberOfStates <= 0) {
         alert("Please Select a year greater than 0");
       } 

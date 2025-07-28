@@ -11,6 +11,13 @@ class ExamineData():
   def __init__(self):
     self.data = pd.read_csv('./data/everest_deaths.csv')
   
+  def min_values(self): 
+    self.data['Date_clean'] = pd.to_datetime(self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0], errors='coerce')
+    min_date = self.data['Date_clean'].min()
+    max_date = self.data['Date_clean'].max()
+    print(f"Min date: {min_date}") #Min date: 1921-06-05 00:00:00
+    print(f"Max date: {max_date}")  #Max date: 2025-05-15 00:00:00
+  
   #Top 3 nationalies
   def top_nations_data(self, number_of_nations): 
     top_nations = []
@@ -154,5 +161,5 @@ class ExamineData():
   def common_months_for_deaths(self):
     pass
 
-# test_object = ExamineData()
-# test_object.deadliest_expeditions()
+test_object = ExamineData()
+test_object.min_values()
