@@ -19,29 +19,68 @@ class ExamineData():
     print(f"Max date: {max_date}")  #Max date: 2025-05-15 00:00:00
   
   #Top 3 nationalies
-  def top_nations_data(self, number_of_nations): 
+  def top_nations_data(self, number_of_nations, startDate, endDate): 
     top_nations = []
+
+    # Clean and parse the Date column (if not already cleaned)
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
+
+    # Filter rows by date range
+    filtered_data = self.data[
+        (self.data['Date_clean'] >= start_dt) & (self.data['Date_clean'] <= end_dt)
+    ]
+
     # Group by Nationality and count number of rows (deaths)
     counts = (
-        self.data.groupby('Nationality')
+        filtered_data.groupby('Nationality')
         .size()
         .reset_index(name='Death Count')
     )
-    # Drop missing or empty Nationality values
+
+    # Drop rows with missing or empty nationality values
     counts = counts[counts['Nationality'].notnull() & (counts['Nationality'] != '')]
-    # Sort by Death Count descending and take top 3
+
+    # Sort by Death Count descending and take top N
     nations = counts.sort_values(by='Death Count', ascending=False).head(number_of_nations)
-    count = 0
-    while count < number_of_nations:
-      rows = []
-      state = nations.iloc[count][0]
-      deaths = int(nations.iloc[count][1])
-      rows.append(state)
-      rows.append(deaths)
-      top_nations.append(rows)
-      count += 1 
+
+    # Convert result to list format
+    for _, row in nations.iterrows():
+        top_nations.append([row['Nationality'], int(row['Death Count'])])
+    print(top_nations)
     return top_nations
-    # [['Nation', 'Deaths'], ['Nepal', 132], ['India', 27], ['Japan', 19]]
+
+  # def top_nations_data(self, number_of_nations, startDate, endDate): 
+  #   top_nations = []
+  #   # Clean the date_time column 
+  #   self.data['Date_clean'] = pd.to_datetime(self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0], errors='coerce')
+  #   # Group by Nationality and count number of rows (deaths)
+  #   counts = (
+  #       self.data.groupby('Nationality')
+  #       .size()
+  #       .reset_index(name='Death Count')
+  #   )
+  #   # Drop missing or empty Nationality values
+  #   counts = counts[counts['Nationality'].notnull() & (counts['Nationality'] != '')]
+  #   # Sort by Death Count descending and take top 3
+  #   nations = counts.sort_values(by='Death Count', ascending=False).head(number_of_nations)
+  #   count = 0
+  #   while count < number_of_nations:
+  #     rows = []
+  #     state = nations.iloc[count][0]
+  #     deaths = int(nations.iloc[count][1])
+  #     rows.append(state)
+  #     rows.append(deaths)
+  #     top_nations.append(rows)
+  #     count += 1 
+  #   return top_nations
+
 
   def drilldown_states_graph(self, selected_state):
       filtered = self.data[

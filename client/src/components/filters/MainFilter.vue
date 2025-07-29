@@ -76,10 +76,17 @@ export default {
       else if (this.numberOfBins <= 0) {
         alert("Please enter a number greater than 0")
       }
+      else if (!this.startDate || !this.endDate) {
+        alert("Please select both start and end dates.");
+      }else if (this.startDate > this.endDate) {
+        alert("Start date cannot be after end date.");
+      }
       else {
         const payload = {
           numberOfStates: this.numberOfStates,
           numberOfBins: this.numberOfBins,
+          firstDate: this.startDate, 
+          lastDate: this.endDate,
         };
         this.getDataBasedOnFilters({ payload });
       }
