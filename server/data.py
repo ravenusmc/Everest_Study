@@ -21,35 +21,28 @@ class ExamineData():
   #Top 3 nationalies
   def top_nations_data(self, number_of_nations, startDate, endDate): 
     top_nations = []
-
     # Clean and parse the Date column (if not already cleaned)
     self.data['Date_clean'] = pd.to_datetime(
         self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
         errors='coerce'
     )
-
     # Convert input start/end dates to datetime
     start_dt = pd.to_datetime(startDate)
     end_dt = pd.to_datetime(endDate)
-
     # Filter rows by date range
     filtered_data = self.data[
         (self.data['Date_clean'] >= start_dt) & (self.data['Date_clean'] <= end_dt)
     ]
-
     # Group by Nationality and count number of rows (deaths)
     counts = (
         filtered_data.groupby('Nationality')
         .size()
         .reset_index(name='Death Count')
     )
-
     # Drop rows with missing or empty nationality values
     counts = counts[counts['Nationality'].notnull() & (counts['Nationality'] != '')]
-
     # Sort by Death Count descending and take top N
     nations = counts.sort_values(by='Death Count', ascending=False).head(number_of_nations)
-
     # Convert result to list format
     for _, row in nations.iterrows():
         top_nations.append([row['Nationality'], int(row['Death Count'])])

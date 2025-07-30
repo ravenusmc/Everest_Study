@@ -27,13 +27,16 @@ const data = {
     ['Asian Trekking', 9]
   ],
   stateDeathsDrillDown: [],
-
+  startDate: "1921-06-05",
+  endDate: "2025-05-15",
 };
 
 const getters = {
 	deathsByStates: (state) => state.deathsByStates,
   deathsByAge: (state) => state.deathsByAge, 
   deathsByExpedition: (state) => state.deathsByExpedition,
+  startDate: (state) => state.startDate, 
+  endDate: (state) => state.endDate, 
 };
 
 const actions = {
