@@ -53,6 +53,8 @@ const actions = {
 	},
 
   getDataBasedOnFilters:({commit}, {payload}) => {
+    commit('setStartDate', payload['firstDate'])
+    commit('setEndDate', payload['lastDate'])
     const path = 'http://localhost:5000/getDataBasedOnFilters';
 		axios.post(path, payload)
 		.then((res) => {
@@ -97,7 +99,15 @@ const mutations = {
   // Mutations for the drill down tables
   setStatesDeathsDrillDown(state, value) {
     state.stateDeathsDrillDown = value
-  }
+  },
+
+  setStartDate(state, value) {
+    state.startDate = value 
+  },
+
+  setEndDate(state, value) {
+    state.endDate = value
+  },
 
 };
 
