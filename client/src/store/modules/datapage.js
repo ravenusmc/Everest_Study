@@ -67,8 +67,9 @@ const actions = {
 		});
   },
 
-  async getDataForDrillDown (_, payload) {
+  async getDataForDrillDown ({ getters }, payload) {
     try {
+      console.log(getters.startDate)
 			// Perform an asynchronous operation, for example, an API call
 			const res = await axios.post('http://localhost:5000/getDataForDrillDownGraphs', payload);
 			// Return the data from the response

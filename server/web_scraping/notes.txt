@@ -143,3 +143,6 @@ async getDataForDrillDown ({commit}, payload) {
 			throw error;
 		}
   },
+
+
+async getDataForDrillDown (_, payload) {

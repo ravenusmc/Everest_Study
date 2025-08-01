@@ -17,6 +17,7 @@ export default {
   computed: {
     ...mapGetters("datapage", [
       "deathsByStates",
+      "startDate",
     ]),
   },
   watch: {
