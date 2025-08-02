@@ -33,9 +33,9 @@ def getDataForDrillDownGraphs():
     if request.method == 'POST':
       get_data_object = ExamineData()
       post_data = request.get_json()
-      print(post_data)
+      # print(post_data)
       if post_data.get('state'):
-        drilldown_data = get_data_object.drilldown_states_graph(post_data['state'])
+        drilldown_data = get_data_object.drilldown_states_graph(post_data['state'], post_data['startDate'], post_data['endDate'])
       elif post_data.get('ageGroup'):
         drilldown_data = get_data_object.drilldown_deaths_by_age_graph(post_data['ageGroup'])
       print(drilldown_data)

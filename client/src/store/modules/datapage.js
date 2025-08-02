@@ -58,7 +58,6 @@ const actions = {
     const path = 'http://localhost:5000/getDataBasedOnFilters';
 		axios.post(path, payload)
 		.then((res) => {
-        console.log(res.data)
 				commit('setDeathsByStates', res.data['top_nations'])
         commit('setDeathsByAge', res.data['bins_for_age_graph'])
 		})
@@ -69,8 +68,8 @@ const actions = {
 
   async getDataForDrillDown ({ getters }, payload) {
     try {
-      console.log(getters.startDate)
-			// Perform an asynchronous operation, for example, an API call
+      payload['startDate'] = getters.startDate
+      payload['endDate'] = getters.endDate
 			const res = await axios.post('http://localhost:5000/getDataForDrillDownGraphs', payload);
 			// Return the data from the response
       // commit('setStatesDeathsDrillDown', 5)

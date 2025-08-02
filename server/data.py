@@ -49,55 +49,41 @@ class ExamineData():
     print(top_nations)
     return top_nations
 
-  # def top_nations_data(self, number_of_nations, startDate, endDate): 
-  #   top_nations = []
-  #   # Clean the date_time column 
-  #   self.data['Date_clean'] = pd.to_datetime(self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0], errors='coerce')
-  #   # Group by Nationality and count number of rows (deaths)
-  #   counts = (
-  #       self.data.groupby('Nationality')
-  #       .size()
-  #       .reset_index(name='Death Count')
-  #   )
-  #   # Drop missing or empty Nationality values
-  #   counts = counts[counts['Nationality'].notnull() & (counts['Nationality'] != '')]
-  #   # Sort by Death Count descending and take top 3
-  #   nations = counts.sort_values(by='Death Count', ascending=False).head(number_of_nations)
-  #   count = 0
-  #   while count < number_of_nations:
-  #     rows = []
-  #     state = nations.iloc[count][0]
-  #     deaths = int(nations.iloc[count][1])
-  #     rows.append(state)
-  #     rows.append(deaths)
-  #     top_nations.append(rows)
-  #     count += 1 
-  #   return top_nations
+  def drilldown_states_graph(self, selected_state, startDate, endDate):
+    # Clean and parse the Date column
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
 
+    # Filter by state and date range
+    filtered_data = self.data[
+        (self.data['Date_clean'] >= start_dt) &
+        (self.data['Date_clean'] <= end_dt) &
+        (self.data['Nationality'] == selected_state) &
+        (self.data['Date_clean'].notnull())
+    ]
 
-  def drilldown_states_graph(self, selected_state):
-      filtered = self.data[
-          (self.data['Nationality'] == selected_state) &
-          (self.data['Nationality'].notnull()) &
-          (self.data['Nationality'] != '')
-      ]
+    # Define the columns you want to keep
+    selected_columns = [
+        'Name', 'Date', 'Age', 'Expedition',
+        'Cause_of_Death', 'Location', 'Remains status'
+    ]
+    
+    filtered = filtered_data[selected_columns]
 
-      selected_columns = [
-          'Name', 'Date', 'Age', 'Expedition',
-          'Cause_of_Death', 'Location', 'Remains status'
-      ]
-      filtered = filtered[selected_columns]
+    # Convert to list of dictionaries and replace NaNs with None
+    drilldown_data = filtered.to_dict(orient='records')
+    for row in drilldown_data:
+        for key in row:
+            if pd.isna(row[key]):
+                row[key] = None
 
-      # Convert to list of dictionaries
-      drilldown_data = filtered.to_dict(orient='records')
+    return drilldown_data
 
-      # Replace all NaNs with None
-      for row in drilldown_data:
-          for key in row:
-              if pd.isna(row[key]):
-                  row[key] = None
-
-      return drilldown_data
 
   #Histogram of deaths by age 
   def deaths_by_age(self, bin_size):
