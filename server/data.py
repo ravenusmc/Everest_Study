@@ -58,7 +58,6 @@ class ExamineData():
     # Convert input start/end dates to datetime
     start_dt = pd.to_datetime(startDate)
     end_dt = pd.to_datetime(endDate)
-
     # Filter by state and date range
     filtered_data = self.data[
         (self.data['Date_clean'] >= start_dt) &
@@ -66,55 +65,75 @@ class ExamineData():
         (self.data['Nationality'] == selected_state) &
         (self.data['Date_clean'].notnull())
     ]
-
     # Define the columns you want to keep
     selected_columns = [
         'Name', 'Date', 'Age', 'Expedition',
         'Cause_of_Death', 'Location', 'Remains status'
     ]
-    
     filtered = filtered_data[selected_columns]
-
     # Convert to list of dictionaries and replace NaNs with None
     drilldown_data = filtered.to_dict(orient='records')
     for row in drilldown_data:
         for key in row:
             if pd.isna(row[key]):
                 row[key] = None
-
     return drilldown_data
 
 
   #Histogram of deaths by age 
-  def deaths_by_age(self, bin_size):
-      # Ensure Age column is numeric
-      self.data['Age'] = pd.to_numeric(self.data['Age'], errors='coerce')
-      # Drop rows where Age is NaN
-      age_data = self.data.dropna(subset=['Age'])
-      # Create bins
-      min_age = int(age_data['Age'].min()) // bin_size * bin_size
-      max_age = int(age_data['Age'].max()) // bin_size * bin_size + bin_size
-      bins = list(range(min_age, max_age + bin_size, bin_size))
-      # Create labels like "10-19", "20-29", etc.
-      labels = [f"{b}-{b + bin_size - 1}" for b in bins[:-1]]
-      # Cut into bins
-      age_data['Age Group'] = pd.cut(age_data['Age'], bins=bins, labels=labels, right=True)
-      # Count per bin and convert to desired format
-      counts = age_data['Age Group'].value_counts().sort_index()
-      bins_for_age_graph = [[label, int(counts[label])] for label in labels]
-      return bins_for_age_graph
+  def deaths_by_age(self, bin_size, startDate, endDate):
+    # Clean and parse the Date column
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
+    # Ensure Age column is numeric
+    self.data['Age'] = pd.to_numeric(self.data['Age'], errors='coerce')
+    # Filter for both date range AND non-null age
+    age_data = self.data[
+        (self.data['Date_clean'] >= start_dt) &
+        (self.data['Date_clean'] <= end_dt)
+    ].dropna(subset=['Age'])
+    # Create bins
+    min_age = int(age_data['Age'].min()) // bin_size * bin_size
+    max_age = int(age_data['Age'].max()) // bin_size * bin_size + bin_size
+    bins = list(range(min_age, max_age + bin_size, bin_size))
+    labels = [f"{b}-{b + bin_size - 1}" for b in bins[:-1]]
+    # Bin ages
+    age_data['Age Group'] = pd.cut(age_data['Age'], bins=bins, labels=labels, right=True)
+    # Count per bin
+    counts = age_data['Age Group'].value_counts().sort_index()
+    bins_for_age_graph = [[label, int(counts[label])] for label in labels]
+    return bins_for_age_graph
+
   
-  def drilldown_deaths_by_age_graph(self, age_group):
-    # Extract lower and upper bounds from string like '40-49'
+  def drilldown_deaths_by_age_graph(self, age_group, startDate, endDate):
+    # Clean and parse the Date column
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
+    # Ensure Age is numeric
+    self.data['Age'] = pd.to_numeric(self.data['Age'], errors='coerce')
+    # Extract lower and upper bounds
     try:
         lower, upper = map(int, age_group.split('-'))
     except ValueError:
         raise ValueError("age_group must be a string like '40-49'")
-    # Ensure Age is numeric
-    self.data['Age'] = pd.to_numeric(self.data['Age'], errors='coerce')
-    # Filter by age range
+
+    # Filter by state and date range
     filtered_df = self.data[
-        (self.data['Age'] >= lower) & (self.data['Age'] <= upper)
+        (self.data['Date_clean'] >= start_dt) &
+        (self.data['Date_clean'] <= end_dt) &
+        (self.data['Age'] >= lower) &
+        (self.data['Age'] <= upper) &
+        (self.data['Date_clean'].notnull())
     ]
     # Select desired columns
     selected_columns = [
@@ -127,7 +146,6 @@ class ExamineData():
     # Return as list of dicts for easy use in frontend
     return result.to_dict(orient='records')
 
-  
   #deadliest expeditions 
   def deadliest_expeditions(self, number_of_expeditions=3):
     expeditions_list = []

@@ -29,6 +29,7 @@ const data = {
   stateDeathsDrillDown: [],
   startDate: "1921-06-05",
   endDate: "2025-05-15",
+  bins: 10, 
 };
 
 const getters = {
@@ -37,6 +38,7 @@ const getters = {
   deathsByExpedition: (state) => state.deathsByExpedition,
   startDate: (state) => state.startDate, 
   endDate: (state) => state.endDate, 
+  bins: (state) => state.bins, 
 };
 
 const actions = {
@@ -53,6 +55,7 @@ const actions = {
 	},
 
   getDataBasedOnFilters:({commit}, {payload}) => {
+    commit('setBins', payload['numberOfBins'])
     commit('setStartDate', payload['firstDate'])
     commit('setEndDate', payload['lastDate'])
     const path = 'http://localhost:5000/getDataBasedOnFilters';
@@ -71,8 +74,6 @@ const actions = {
       payload['startDate'] = getters.startDate
       payload['endDate'] = getters.endDate
 			const res = await axios.post('http://localhost:5000/getDataForDrillDownGraphs', payload);
-			// Return the data from the response
-      // commit('setStatesDeathsDrillDown', 5)
 			return res.data;
 		} catch (error) {
 			console.error('Error in drilldown action:', error);
@@ -108,6 +109,10 @@ const mutations = {
   setEndDate(state, value) {
     state.endDate = value
   },
+
+  setBins(state, value) {
+    state.bins = value
+  }, 
 
 };
 

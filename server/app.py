@@ -22,7 +22,7 @@ def getDataBasedOnFilters():
     print(post_data)
     top_nations = get_data_object.top_nations_data(post_data['numberOfStates'], post_data['firstDate'], post_data['lastDate'])
     data_dictionary['top_nations'] = top_nations
-    bins_for_age_graph = get_data_object.deaths_by_age(post_data['numberOfBins'])
+    bins_for_age_graph = get_data_object.deaths_by_age(post_data['numberOfBins'], post_data['firstDate'], post_data['lastDate'])
     data_dictionary['bins_for_age_graph'] = bins_for_age_graph
     print(bins_for_age_graph)
     return jsonify(data_dictionary)
@@ -37,7 +37,7 @@ def getDataForDrillDownGraphs():
       if post_data.get('state'):
         drilldown_data = get_data_object.drilldown_states_graph(post_data['state'], post_data['startDate'], post_data['endDate'])
       elif post_data.get('ageGroup'):
-        drilldown_data = get_data_object.drilldown_deaths_by_age_graph(post_data['ageGroup'])
+        drilldown_data = get_data_object.drilldown_deaths_by_age_graph(post_data['ageGroup'], post_data['startDate'], post_data['endDate'])
       print(drilldown_data)
       return jsonify(drilldown_data) 
 
