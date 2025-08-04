@@ -26,7 +26,6 @@ const data = {
     ['Indian expedition', 9], 
     ['Asian Trekking', 9]
   ],
-  stateDeathsDrillDown: [],
   startDate: "1921-06-05",
   endDate: "2025-05-15",
   bins: 10, 

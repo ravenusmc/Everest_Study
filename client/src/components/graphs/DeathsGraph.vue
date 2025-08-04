@@ -128,7 +128,7 @@ export default {
         .style("padding", "10px")
         .style("position", "absolute");
     
-        // Tooltip functions
+      // Tooltip functions
       let showTooltip = function (event, d) {
         tooltip
           .style("opacity", 1)
@@ -147,7 +147,7 @@ export default {
         tooltip.style("opacity", 0);
       };
 
-       // Add bars
+      // Add bars
       let bars = svg
         .selectAll("rect")
         .data(this.deathsByAge);
