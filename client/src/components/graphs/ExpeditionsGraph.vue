@@ -1,13 +1,16 @@
 <template>
     <div>
         <div ref="expeditionsGraph"></div>
+        <div id="popup">
+          <div id="popupContent" class="popup-scroll"></div>
+          <button @click="closePopup">Close</button>
+        </div>
     </div>
 </template>
 
 <script>
 import * as d3 from "d3";
-//mapActions
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "ExpeditionsGraph",
@@ -26,6 +29,56 @@ export default {
     this.buildExpeditionGraph();
   },  
   methods: {
+    ...mapActions("datapage", ["getDataForDrillDown"]),
+    async handleBarClick(d) {
+
+      //Prepare the payload
+      const payload = { expedition: d[0]};
+
+      // Await the response from the testMe action
+      const response = await this.getDataForDrillDown(payload);
+
+      // console.log(response)
+      // //Function to create a table from JSON data
+      // function createTableFromJson(data) {
+      //   let table =
+      //     '<table border="1" cellpadding="4" cellspacing="0">' +
+      //     '<tr><th>Name</th><th>Age</th><th>Year Missing</th>' +
+      //     '<th>Expedition</th><th>Cause of Death</th><th>Location</th>'+ 
+      //     '</tr>';
+
+      //   data.forEach((row) => {
+
+      //     // Extract year from date
+      //     let year = row.Date ? new Date(row.Date).getFullYear() : 'Unknown';
+
+      //     // Handle missing fields
+      //     let age = row.Age !== null && row.Age !== undefined && row.Age !== 'nan' ? row.Age : 'Unknown';
+
+      //     // Add row to table
+      //     table += `<tr>
+      //                 <td>${row.Name}</td>
+      //                 <td>${age}</td>
+      //                 <td>${year}</td>
+      //                 <td>${row.Expedition}</td>
+      //                 <td>${row.Cause_of_Death}</td>
+      //                 <td>${row.Location}</td>
+      //               </tr>`;
+      //   });
+
+      //   table += "</table>";
+      //   return table;
+      // }
+
+      // // Display the popup with the count and response
+      // const popup = document.getElementById("popup");
+      // const content = document.getElementById("popupContent");
+      // content.innerHTML = `${'Missing people from ' + d[0]}<br>${createTableFromJson(response)}`;
+
+      // popup.style.display = "block";
+      // popup.style.top = `${event.clientY + 10}px`;
+      // popup.style.left = `${event.clientX + 10}px`;
+    },
     buildExpeditionGraph() {
 
       // Clear previous SVG elements
@@ -152,7 +205,51 @@ export default {
         .text("Deaths by Expedition");
     },
     
+    //Code to deal with the popup
+    closePopup() {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
+    },
+
   }
 }
 
 </script>
+
+<style scoped>
+#popup {
+  z-index: 1000;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-scroll {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+#popup table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#popup th, #popup td {
+  padding: 8px;
+  text-align: left;
+}
+
+#popup th {
+  background-color: #f2f2f2;
+}
+</style>
