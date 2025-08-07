@@ -169,6 +169,16 @@ class ExamineData():
       count += 1 
     print(expeditions_list)
   
+  def drilldown_expedition_graph(self, expedition, startDate, endDate):
+    # Clean and parse the Date column
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
+  
   def top_causes_of_death(self, number_of_causes=3):
     cause_of_death_list = []
     columns = ['Cause of Death', 'Deaths']

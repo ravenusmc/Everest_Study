@@ -38,6 +38,8 @@ def getDataForDrillDownGraphs():
         drilldown_data = get_data_object.drilldown_states_graph(post_data['state'], post_data['startDate'], post_data['endDate'])
       elif post_data.get('ageGroup'):
         drilldown_data = get_data_object.drilldown_deaths_by_age_graph(post_data['ageGroup'], post_data['startDate'], post_data['endDate'])
+      elif post_data.get('expedition'):
+        drilldown_data = get_data_object.drilldown_expedition_graph(post_data['expedition'], post_data['startDate'], post_data['endDate'])
       print(drilldown_data)
       return jsonify(drilldown_data) 
 
