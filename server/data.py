@@ -204,7 +204,7 @@ class ExamineData():
     print(cause_of_death_list)
   
   def common_months_for_deaths(self):
-    pass
+    pas
 
 test_object = ExamineData()
 test_object.min_values()
