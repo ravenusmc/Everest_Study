@@ -172,3 +172,35 @@ async getDataForDrillDown (_, payload)
   #     top_nations.append(rows)
   #     count += 1 
   #   return top_nations
+
+
+    def drilldown_states_graph(self, selected_state, startDate, endDate):
+    # Clean and parse the Date column
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
+    
+    # Filter by state and date range
+    filtered_data = self.data[
+        (self.data['Date_clean'] >= start_dt) &
+        (self.data['Date_clean'] <= end_dt) &
+        (self.data['Nationality'] == selected_state) &
+        (self.data['Date_clean'].notnull())
+    ]
+    # Define the columns you want to keep
+    selected_columns = [
+        'Name', 'Date', 'Age', 'Expedition',
+        'Cause_of_Death', 'Location', 'Remains status'
+    ]
+    filtered = filtered_data[selected_columns]
+    # Convert to list of dictionaries and replace NaNs with None
+    drilldown_data = filtered.to_dict(orient='records')
+    for row in drilldown_data:
+        for key in row:
+            if pd.isna(row[key]):
+                row[key] = None
+    return drilldown_data
