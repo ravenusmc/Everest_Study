@@ -26,6 +26,11 @@ const data = {
     ['Indian expedition', 9], 
     ['Asian Trekking', 9]
   ],
+  causeOfDeath: [
+    ['Fall', 63], 
+    ['Avalanche', 51], 
+    ['Exposure', 25]
+  ],
   startDate: "1921-06-05",
   endDate: "2025-05-15",
   bins: 10, 
@@ -35,6 +40,7 @@ const getters = {
 	deathsByStates: (state) => state.deathsByStates,
   deathsByAge: (state) => state.deathsByAge, 
   deathsByExpedition: (state) => state.deathsByExpedition,
+  causeOfDeath: (state) => state.causeOfDeath,
   startDate: (state) => state.startDate, 
   endDate: (state) => state.endDate, 
   bins: (state) => state.bins, 
@@ -96,7 +102,10 @@ const mutations = {
     state.deathsByExpedition = value
   },
 
-  // Mutations for the drill down tables
+  setCauseOfDeath(state, value) {
+    state.causeOfDeath = value
+  },
+
   setStatesDeathsDrillDown(state, value) {
     state.stateDeathsDrillDown = value
   },

@@ -202,8 +202,6 @@ class ExamineData():
   
   def top_causes_of_death(self, number_of_causes=3):
     cause_of_death_list = []
-    columns = ['Cause of Death', 'Deaths']
-    cause_of_death_list.append(columns)
     counts = (
         self.data.groupby('Cause_of_Death')
         .size()
@@ -228,4 +226,4 @@ class ExamineData():
     pass
 
 test_object = ExamineData()
-test_object.min_values()
+test_object.top_causes_of_death()

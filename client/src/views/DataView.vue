@@ -1,29 +1,37 @@
 <template>
     <div>
+        <div>
+            <OverView />
+        </div>
         <div class="filter-div">
-            <StateFilter />
+            <MainFilter />
         </div>
         <div class="graphs-div">
             <StatesGraph />
             <DeathsGraph />
             <ExpeditionsGraph />
+            <CauseOfDeathGraph />
         </div>
     </div>
 </template>
 
 <script>
-import StateFilter from '@/components/filters/MainFilter.vue'
+import OverView from '@/components/data/OverView.vue'
+import MainFilter from '@/components/filters/MainFilter.vue'
 import StatesGraph from '@/components/graphs/StatesGraph.vue'
 import DeathsGraph from '@/components/graphs/DeathsGraph.vue'
 import ExpeditionsGraph from '@/components/graphs/ExpeditionsGraph.vue'
+import CauseOfDeathGraph from '@/components/graphs/CauseOfDeathGraph.vue'
 
 export default {
 	name: "DataView",
 	components: {
     StatesGraph,
-    StateFilter,
+    MainFilter,
     DeathsGraph,
-    ExpeditionsGraph
+    ExpeditionsGraph,
+    CauseOfDeathGraph,
+    OverView,
   },
 };
 

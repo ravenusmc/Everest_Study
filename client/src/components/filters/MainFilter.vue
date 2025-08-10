@@ -49,7 +49,7 @@
 import { mapActions } from "vuex";
 
 export default {
-  name: "StateFilter",
+  name: "MainFilter",
   data() {
     return {
       numberOfStatesOptions: [1,2,3,4,5,6,7,8,9,10],
