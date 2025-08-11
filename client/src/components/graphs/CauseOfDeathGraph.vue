@@ -122,6 +122,37 @@ export default {
         .duration(1500)
         .attr("y", (d) => y(d[1])) // Final Y position
         .attr("height", (d) => height - y(d[1])); // Final height after transition
+      
+      // Add X axis label
+      svg
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 10) // Adjusted y position to be within the SVG
+        .attr("font-size", "12px")
+        .attr("font-weight", "bold")
+        .text("Cause of Death");
+      
+      // Add Y axis label
+      svg
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", -margin.left + 20)
+        .attr("font-size", "12px")
+        .attr("font-weight", "bold")
+        .text("Death Count");
+      
+      // Add title
+      svg
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", width / 2)
+        .attr("y", -margin.top / 2 + 10) // Adjusted y position to be within the SVG
+        .attr("font-size", "16px")
+        .attr("font-weight", "bold")
+        .text("Causes of Death");
     },
   },
 }

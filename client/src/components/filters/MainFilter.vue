@@ -20,6 +20,15 @@
           </select>
         </div>
         <div>
+          <label>Enter Number to see more causes of death:</label>
+          <select v-model="numberOfCausesOfDeath">
+            <option disabled value="">Please select one</option>
+            <option v-for="bins in numberOfCausesOfDeathOptions" :key="bins" :value="bins">
+              {{ bins }}
+            </option>
+          </select>
+        </div>
+        <div>
           <label for="startDate">Start Date:</label>
             <input
               type="date"
@@ -56,6 +65,8 @@ export default {
       numberOfStates: 3, 
       numberOfBinsOptions: [5,10,12,15,18,21],
       numberOfBins: 10,
+      numberOfCausesOfDeath: 3,
+      numberOfCausesOfDeathOptions: [1,2,3,4,5,6,7,8,9,10],
       startDate: "",
       endDate: "",
       minDate: "1921-06-05",
@@ -85,6 +96,7 @@ export default {
         const payload = {
           numberOfStates: this.numberOfStates,
           numberOfBins: this.numberOfBins,
+          numberOfCausesOfDeath: this.numberOfCausesOfDeath,
           firstDate: this.startDate, 
           lastDate: this.endDate,
         };
