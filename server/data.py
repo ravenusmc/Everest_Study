@@ -200,10 +200,22 @@ class ExamineData():
                 row[key] = None
     return drilldown_data
   
-  def top_causes_of_death(self, number_of_causes=3):
+  def top_causes_of_death(self, number_of_causes, startDate, endDate):
     cause_of_death_list = []
+    # Clean and parse the Date column (if not already cleaned)
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
+    # Filter rows by date range
+    filtered_data = self.data[
+        (self.data['Date_clean'] >= start_dt) & (self.data['Date_clean'] <= end_dt)
+    ]
     counts = (
-        self.data.groupby('Cause_of_Death')
+        filtered_data.groupby('Cause_of_Death')
         .size()
         .reset_index(name='Death Count')
     )
@@ -219,11 +231,12 @@ class ExamineData():
       rows.append(cause_of_death)
       rows.append(deaths)
       cause_of_death_list.append(rows)
-      count += 1 
+      count += 1
     print(cause_of_death_list)
+    return cause_of_death_list
   
   def common_months_for_deaths(self):
     pass
 
-test_object = ExamineData()
-test_object.top_causes_of_death()
+# test_object = ExamineData()
+# test_object.top_causes_of_death()

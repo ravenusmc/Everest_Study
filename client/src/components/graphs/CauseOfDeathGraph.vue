@@ -20,8 +20,8 @@ export default {
     ]),
   },
   watch: {
-    deathsByExpedition: {
-      handler: "buildExpeditionGraph",
+    causeOfDeath: {
+      handler: "buildCauseOfDeathGraph",
       deep: true,
     },
   },
