@@ -232,8 +232,38 @@ class ExamineData():
       rows.append(deaths)
       cause_of_death_list.append(rows)
       count += 1
-    print(cause_of_death_list)
     return cause_of_death_list
+
+  def drilldown_top_causes_of_death_graph(self, expedition, startDate, endDate):
+    # Clean and parse the Date column
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
+
+    # Filter by state and date range
+    filtered_data = self.data[
+        (self.data['Date_clean'] >= start_dt) &
+        (self.data['Date_clean'] <= end_dt) &
+        (self.data['Expedition'] == expedition) &
+        (self.data['Date_clean'].notnull())
+    ]
+    # The columns that I'm using
+    selected_columns = [
+        'Name', 'Date', 'Age', 'Expedition',
+        'Cause_of_Death', 'Location', 'Remains status'
+    ]
+    filtered = filtered_data[selected_columns]
+    # Convert to list of dictionaries and replace NaNs with None
+    drilldown_data = filtered.to_dict(orient='records')
+    for row in drilldown_data:
+        for key in row:
+            if pd.isna(row[key]):
+                row[key] = None
+    return drilldown_data
   
   def common_months_for_deaths(self):
     pass
