@@ -234,7 +234,7 @@ class ExamineData():
       count += 1
     return cause_of_death_list
 
-  def drilldown_top_causes_of_death_graph(self, expedition, startDate, endDate):
+  def drilldown_top_causes_of_death_graph(self, cause_of_death, startDate, endDate):
     # Clean and parse the Date column
     self.data['Date_clean'] = pd.to_datetime(
         self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
@@ -244,13 +244,14 @@ class ExamineData():
     start_dt = pd.to_datetime(startDate)
     end_dt = pd.to_datetime(endDate)
 
-    # Filter by state and date range
+    # Filter by cause of death and date range
     filtered_data = self.data[
         (self.data['Date_clean'] >= start_dt) &
         (self.data['Date_clean'] <= end_dt) &
-        (self.data['Expedition'] == expedition) &
+        (self.data['Cause_of_Death'] == cause_of_death) &
         (self.data['Date_clean'].notnull())
     ]
+    print(filtered_data)
     # The columns that I'm using
     selected_columns = [
         'Name', 'Date', 'Age', 'Expedition',
