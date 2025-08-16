@@ -19,10 +19,16 @@ def getDataBasedOnFilters():
     data_dictionary = {}
     get_data_object = ExamineData()
     post_data = request.get_json()
+    # deaths by nations
     top_nations = get_data_object.top_nations_data(post_data['numberOfStates'], post_data['firstDate'], post_data['lastDate'])
     data_dictionary['top_nations'] = top_nations
+    # Deaths by Age
     bins_for_age_graph = get_data_object.deaths_by_age(post_data['numberOfBins'], post_data['firstDate'], post_data['lastDate'])
     data_dictionary['bins_for_age_graph'] = bins_for_age_graph
+    # Deaths by expedition 
+    data_for_expeditions = get_data_object.deadliest_expeditions(post_data['numberOfExpeditions'], post_data['firstDate'], post_data['lastDate'])
+    data_dictionary['data_for_expeditions'] = data_for_expeditions
+    # Top causes of death
     top_Causes_of_death = get_data_object.top_causes_of_death(post_data['numberOfCausesOfDeath'], post_data['firstDate'], post_data['lastDate'])
     data_dictionary['top_Causes_of_death'] = top_Causes_of_death
     return jsonify(data_dictionary)

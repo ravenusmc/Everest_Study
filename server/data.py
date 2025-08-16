@@ -79,7 +79,6 @@ class ExamineData():
                 row[key] = None
     return drilldown_data
 
-
   #Histogram of deaths by age 
   def deaths_by_age(self, bin_size, startDate, endDate):
     # Clean and parse the Date column
@@ -146,14 +145,26 @@ class ExamineData():
     return result.to_dict(orient='records')
 
   #deadliest expeditions 
-  def deadliest_expeditions(self, number_of_expeditions=3):
-    expeditions_list = []
+  def deadliest_expeditions(self, number_of_expeditions, startDate, endDate):
+    # Clean and parse the Date column
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
+        # Filter rows by date range
+    filtered_data = self.data[
+        (self.data['Date_clean'] >= start_dt) & (self.data['Date_clean'] <= end_dt)
+    ]
     # Group by Nationality
     counts = (
-        self.data.groupby('Expedition')
+        filtered_data.groupby('Expedition')
         .size()
         .reset_index(name='Death Count')
     )
+    expeditions_list = []
     # Drop missing or empty Nationality values
     counts = counts[counts['Expedition'].notnull() & (counts['Expedition'] != '')]
     # Sort by Death Count descending and take top 3
@@ -167,7 +178,7 @@ class ExamineData():
       rows.append(deaths)
       expeditions_list.append(rows)
       count += 1 
-    print(expeditions_list)
+    return expeditions_list
   
   def drilldown_expedition_graph(self, expedition, startDate, endDate):
     # Clean and parse the Date column
@@ -178,7 +189,7 @@ class ExamineData():
     # Convert input start/end dates to datetime
     start_dt = pd.to_datetime(startDate)
     end_dt = pd.to_datetime(endDate)
-
+    
     # Filter by state and date range
     filtered_data = self.data[
         (self.data['Date_clean'] >= start_dt) &
