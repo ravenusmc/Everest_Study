@@ -278,7 +278,21 @@ class ExamineData():
     return drilldown_data
   
   def common_months_for_deaths(self):
-    pass
+    deaths_by_month_list = []
+    # Ensure 'Date' is parsed into datetime objects
+    self.data['Date_clean'] = pd.to_datetime(self.data['Date'], errors='coerce')
+    # Drop rows where date parsing failed
+    clean_data = self.data.dropna(subset=['Date_clean'])
+    # Extract month name
+    clean_data['Month'] = clean_data['Date_clean'].dt.month_name()
+    # Count deaths per month
+    month_counts = clean_data['Month'].value_counts().sort_index()
+    for month, count in month_counts.items():
+      rows = []
+      rows.append(month)
+      rows.append(count)
+      deaths_by_month_list.append(rows)
+    return deaths_by_month_list
 
-# test_object = ExamineData()
-# test_object.top_causes_of_death()
+test_object = ExamineData()
+test_object.common_months_for_deaths()

@@ -31,6 +31,19 @@ const data = {
     ['Avalanche', 51], 
     ['Exposure', 25]
   ],
+  deathsByMonth: [
+    ['April', 72], 
+    ['August', 4], 
+    ['December', 4], 
+    ['January', 3], 
+    ['July', 1], 
+    ['June', 16], 
+    ['March', 3], 
+    ['May', 175], 
+    ['November', 1], 
+    ['October', 36], 
+    ['September', 28]
+  ],
   startDate: "1921-06-05",
   endDate: "2025-05-15",
   bins: 10, 
@@ -41,6 +54,7 @@ const getters = {
   deathsByAge: (state) => state.deathsByAge, 
   deathsByExpedition: (state) => state.deathsByExpedition,
   causeOfDeath: (state) => state.causeOfDeath,
+  deathsByMonth: (state) => state.deathsByMonth,
   startDate: (state) => state.startDate, 
   endDate: (state) => state.endDate, 
   bins: (state) => state.bins, 
@@ -106,6 +120,10 @@ const mutations = {
 
   setCauseOfDeath(state, value) {
     state.causeOfDeath = value
+  },
+
+  setDeathsByMonth(state, value) {
+    state.deathsByMonth = value
   },
 
   setStatesDeathsDrillDown(state, value) {
