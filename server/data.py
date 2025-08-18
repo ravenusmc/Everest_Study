@@ -278,6 +278,7 @@ class ExamineData():
     return drilldown_data
   
   def common_months_for_deaths(self):
+    # This list will hold the data 
     deaths_by_month_list = []
     # Ensure 'Date' is parsed into datetime objects
     self.data['Date_clean'] = pd.to_datetime(self.data['Date'], errors='coerce')

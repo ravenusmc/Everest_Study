@@ -14,7 +14,7 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "CauseOfDeathGraph",
-    computed: {
+  computed: {
     ...mapGetters("datapage", [
       "causeOfDeath",
     ]),

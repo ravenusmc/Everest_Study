@@ -11,6 +11,7 @@
             <DeathsGraph />
             <ExpeditionsGraph />
             <CauseOfDeathGraph />
+            <DeathsByMonthGraph />
         </div>
     </div>
 </template>
@@ -22,6 +23,7 @@ import StatesGraph from '@/components/graphs/StatesGraph.vue'
 import DeathsGraph from '@/components/graphs/DeathsGraph.vue'
 import ExpeditionsGraph from '@/components/graphs/ExpeditionsGraph.vue'
 import CauseOfDeathGraph from '@/components/graphs/CauseOfDeathGraph.vue'
+import DeathsByMonthGraph from '@/components/graphs/DeathsByMonth.vue'
 
 export default {
 	name: "DataView",
@@ -31,6 +33,7 @@ export default {
     DeathsGraph,
     ExpeditionsGraph,
     CauseOfDeathGraph,
+    DeathsByMonthGraph,
     OverView,
   },
 };
@@ -41,6 +44,11 @@ export default {
 
 .filter-div {
     border: 2px solid red;
+}
+
+.graphs-div {
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 </style>
