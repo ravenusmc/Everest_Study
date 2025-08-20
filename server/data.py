@@ -278,22 +278,27 @@ class ExamineData():
     return drilldown_data
   
   def common_months_for_deaths(self):
-    # This list will hold the data 
-    deaths_by_month_list = []
-    # Ensure 'Date' is parsed into datetime objects
-    self.data['Date_clean'] = pd.to_datetime(self.data['Date'], errors='coerce')
-    # Drop rows where date parsing failed
-    clean_data = self.data.dropna(subset=['Date_clean'])
-    # Extract month name
-    clean_data['Month'] = clean_data['Date_clean'].dt.month_name()
-    # Count deaths per month
-    month_counts = clean_data['Month'].value_counts().sort_index()
-    for month, count in month_counts.items():
-      rows = []
-      rows.append(month)
-      rows.append(count)
-      deaths_by_month_list.append(rows)
-    return deaths_by_month_list
+      # This list will hold the data 
+      deaths_by_month_list = []
 
-test_object = ExamineData()
-test_object.common_months_for_deaths()
+      # Ensure 'Date' is parsed into datetime objects
+      self.data['Date_clean'] = pd.to_datetime(self.data['Date'], errors='coerce')
+
+      # Drop rows where date parsing failed
+      clean_data = self.data.dropna(subset=['Date_clean'])
+
+      # Extract month number and month name
+      clean_data['Month_Num'] = clean_data['Date_clean'].dt.month
+      clean_data['Month_Name'] = clean_data['Date_clean'].dt.month_name()
+
+      # Count deaths per month and sort by Month_Num
+      month_counts = clean_data.groupby(['Month_Num', 'Month_Name']).size().sort_index()
+      # Convert to list
+      for (month_num, month_name), count in month_counts.items():
+          deaths_by_month_list.append([month_name, count])
+      print(deaths_by_month_list)
+      return deaths_by_month_list
+
+
+# test_object = ExamineData()
+# test_object.common_months_for_deaths()

@@ -32,17 +32,17 @@ const data = {
     ['Exposure', 25]
   ],
   deathsByMonth: [
-    ['April', 72], 
-    ['August', 4], 
-    ['December', 4], 
     ['January', 3], 
-    ['July', 1], 
-    ['June', 16], 
     ['March', 3], 
+    ['April', 72], 
     ['May', 175], 
-    ['November', 1], 
+    ['June', 16], 
+    ['July', 1], 
+    ['August', 4], 
+    ['September', 28], 
     ['October', 36], 
-    ['September', 28]
+    ['November', 1], 
+    ['December', 4]
   ],
   startDate: "1921-06-05",
   endDate: "2025-05-15",
