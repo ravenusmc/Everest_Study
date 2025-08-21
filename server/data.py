@@ -289,7 +289,7 @@ class ExamineData():
 
       # Extract month number and month name
       clean_data['Month_Num'] = clean_data['Date_clean'].dt.month
-      clean_data['Month_Name'] = clean_data['Date_clean'].dt.month_name()
+      clean_data['Month_Name'] = clean_data['Date_clean'].dt.strftime('%b')
 
       # Count deaths per month and sort by Month_Num
       month_counts = clean_data.groupby(['Month_Num', 'Month_Name']).size().sort_index()
@@ -300,5 +300,5 @@ class ExamineData():
       return deaths_by_month_list
 
 
-# test_object = ExamineData()
-# test_object.common_months_for_deaths()
+test_object = ExamineData()
+test_object.common_months_for_deaths()
