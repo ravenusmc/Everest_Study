@@ -277,28 +277,33 @@ class ExamineData():
                 row[key] = None
     return drilldown_data
   
-  def common_months_for_deaths(self):
-      # This list will hold the data 
-      deaths_by_month_list = []
+  def common_months_for_deaths(self, startDate, endDate):
+    deaths_by_month_list = []
+    # Parse 'Date' column using regex to handle messy formats
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Drop rows where parsing failed
+    self.data = self.data.dropna(subset=['Date_clean'])
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(startDate)
+    end_dt = pd.to_datetime(endDate)
+    # Filter rows by date range (use the cleaned column)
+    filtered_data = self.data[
+        (self.data['Date_clean'] >= start_dt) & (self.data['Date_clean'] <= end_dt)
+    ]
+    # Extract month number and month name from filtered data
+    filtered_data['Month_Num'] = filtered_data['Date_clean'].dt.month
+    filtered_data['Month_Name'] = filtered_data['Date_clean'].dt.strftime('%b')
+    # Count deaths per month and sort by Month_Num
+    month_counts = filtered_data.groupby(['Month_Num', 'Month_Name']).size().sort_index()
+    # Convert to list
+    for (month_num, month_name), count in month_counts.items():
+        deaths_by_month_list.append([month_name, count])
+    return deaths_by_month_list
 
-      # Ensure 'Date' is parsed into datetime objects
-      self.data['Date_clean'] = pd.to_datetime(self.data['Date'], errors='coerce')
-
-      # Drop rows where date parsing failed
-      clean_data = self.data.dropna(subset=['Date_clean'])
-
-      # Extract month number and month name
-      clean_data['Month_Num'] = clean_data['Date_clean'].dt.month
-      clean_data['Month_Name'] = clean_data['Date_clean'].dt.strftime('%b')
-
-      # Count deaths per month and sort by Month_Num
-      month_counts = clean_data.groupby(['Month_Num', 'Month_Name']).size().sort_index()
-      # Convert to list
-      for (month_num, month_name), count in month_counts.items():
-          deaths_by_month_list.append([month_name, count])
-      print(deaths_by_month_list)
-      return deaths_by_month_list
 
 
-test_object = ExamineData()
-test_object.common_months_for_deaths()
+# test_object = ExamineData()
+# test_object.common_months_for_deaths()

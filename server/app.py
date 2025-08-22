@@ -31,6 +31,9 @@ def getDataBasedOnFilters():
     # Top causes of death
     top_Causes_of_death = get_data_object.top_causes_of_death(post_data['numberOfCausesOfDeath'], post_data['firstDate'], post_data['lastDate'])
     data_dictionary['top_Causes_of_death'] = top_Causes_of_death
+    # Deaths by Month
+    deaths_by_month = get_data_object.common_months_for_deaths(post_data['firstDate'], post_data['lastDate'])
+    data_dictionary['deaths_by_month'] = deaths_by_month
     return jsonify(data_dictionary)
 
 

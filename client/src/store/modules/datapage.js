@@ -83,6 +83,7 @@ const actions = {
         commit('setDeathsByAge', res.data['bins_for_age_graph'])
         commit('setDeathsByExpedition', res.data['data_for_expeditions'])
         commit('setCauseOfDeath', res.data['top_Causes_of_death'])
+        commit('setDeathsByMonth', res.data['deaths_by_month'])
 		})
 		.catch((error) => {
 			console.log(error);
