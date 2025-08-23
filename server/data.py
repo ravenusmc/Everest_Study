@@ -3,6 +3,7 @@
 # importing supporting libraries
 import numpy as np
 import pandas as pd
+import calendar
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
@@ -302,8 +303,65 @@ class ExamineData():
     for (month_num, month_name), count in month_counts.items():
         deaths_by_month_list.append([month_name, count])
     return deaths_by_month_list
+  
+  def common_months_for_death_drilldown(self, month_abbr, start_date, end_date):
+    # Clean and parse the Date column
+    self.data['Date_clean'] = pd.to_datetime(
+        self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
+        errors='coerce'
+    )
+    # Convert input start/end dates to datetime
+    start_dt = pd.to_datetime(start_date)
+    end_dt = pd.to_datetime(end_date)
+    # Convert month abbreviation to month number
+    month_abbr = month_abbr.title()  # ensure first letter capitalized
+    month_number = {v: k for k, v in enumerate(calendar.month_abbr)}.get(month_abbr)
+    if month_number is None:
+        raise ValueError(f"Invalid month abbreviation: {month_abbr}")
 
+    # Filter by date range, month, and valid dates
+    filtered_data = self.data[
+        (self.data['Date_clean'].notnull()) &
+        (self.data['Date_clean'] >= start_dt) &
+        (self.data['Date_clean'] <= end_dt) &
+        (self.data['Date_clean'].dt.month == month_number)
+    ]
 
+    # Columns to include
+    selected_columns = [
+        'Name', 'Date', 'Age', 'Expedition',
+        'Cause_of_Death', 'Location', 'Remains status'
+    ]
+    filtered = filtered_data[selected_columns]
 
-# test_object = ExamineData()
-# test_object.common_months_for_deaths()
+    # Convert to list of dictionaries and replace NaNs with None
+    drilldown_data = filtered.to_dict(orient='records')
+    for row in drilldown_data:
+        for key in row:
+            if pd.isna(row[key]):
+                row[key] = None
+
+    return drilldown_data
+
+  def heat_map_location_cause_of_death(self):
+    # Convert 'Date' to datetime to extract year
+    self.data['Date_clean'] = pd.to_datetime(self.data['Date'], errors='coerce')
+    self.data['Year'] = self.data['Date_clean'].dt.year
+    # Select relevant columns
+    data_heatmap = self.data[['Location', 'Cause_of_Death']].dropna()
+    # Aggregate counts
+    heatmap_counts = data_heatmap.groupby(['Location', 'Cause_of_Death']).size().reset_index(name='Count')
+
+    # Convert to list of dicts (for D3.js)
+    heat_map_location_cause_of_death_list = []
+    for _, row in heatmap_counts.iterrows():
+        heat_map_location_cause_of_death_list.append({
+            "Location": row['Location'],
+            "Cause": row['Cause_of_Death'],
+            "Count": int(row['Count'])
+    })
+    return heat_map_location_cause_of_death_list
+    
+
+test_object = ExamineData()
+test_object.heat_map_location_cause_of_death()

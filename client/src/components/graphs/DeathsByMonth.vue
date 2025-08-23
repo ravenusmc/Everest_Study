@@ -10,7 +10,7 @@
 
 <script>
 import * as d3 from "d3";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "DeathsByMonthGraph",
@@ -29,132 +29,141 @@ export default {
     this.buildDeathByMonthGraph();
   },  
   methods: {
-    //...mapActions("datapage", ["getDataForDrillDown"]),
+    ...mapActions("datapage", ["getDataForDrillDown"]),
+    async handleBarClick(d) {
+
+      //Prepare the payload
+      const payload = { month: d[0]};
+      
+      // Await the response from the testMe action
+      const response = await this.getDataForDrillDown(payload);
+      console.log(response)
+    },
     buildDeathByMonthGraph() {
-  // Clear previous SVG elements
-  d3.select(this.$refs.DeathsByMonthGraph).select("svg").remove();
+      // Clear previous SVG elements
+      d3.select(this.$refs.DeathsByMonthGraph).select("svg").remove();
 
-  // set the dimensions and margins of the graph
-  let margin = { top: 50, right: 30, bottom: 50, left: 70 };
-  let width = 460 - margin.left - margin.right;
-  let height = 400 - margin.top - margin.bottom;
+      // set the dimensions and margins of the graph
+      let margin = { top: 50, right: 30, bottom: 50, left: 70 };
+      let width = 460 - margin.left - margin.right;
+      let height = 400 - margin.top - margin.bottom;
 
-  // append the svg object to the div
-  let svg = d3
-    .select(this.$refs.DeathsByMonthGraph)
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      // append the svg object to the div
+      let svg = d3
+        .select(this.$refs.DeathsByMonthGraph)
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  // X axis (using scalePoint for even spacing of categories)
-  let x = d3
-    .scalePoint()
-    .range([0, width])
-    .domain(this.deathsByMonth.map((d) => d[0]))
-    .padding(0.5);
+      // X axis (using scalePoint for even spacing of categories)
+      let x = d3
+        .scalePoint()
+        .range([0, width])
+        .domain(this.deathsByMonth.map((d) => d[0]))
+        .padding(0.5);
 
-  svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+      svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
 
-  // Y axis
-  let y = d3
-    .scaleLinear()
-    .domain([0, d3.max(this.deathsByMonth, (d) => d[1])])
-    .range([height, 0]);
+      // Y axis
+      let y = d3
+        .scaleLinear()
+        .domain([0, d3.max(this.deathsByMonth, (d) => d[1])])
+        .range([height, 0]);
 
-  svg.append("g").call(d3.axisLeft(y));
+      svg.append("g").call(d3.axisLeft(y));
 
-  // Tooltip
-  let tooltip = d3
-    .select(this.$refs.DeathsByMonthGraph)
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "tooltip")
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "1px")
-    .style("border-radius", "5px")
-    .style("padding", "10px")
-    .style("position", "absolute");
+      // Tooltip
+      let tooltip = d3
+        .select(this.$refs.DeathsByMonthGraph)
+        .append("div")
+        .style("opacity", 0)
+        .attr("class", "tooltip")
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "1px")
+        .style("border-radius", "5px")
+        .style("padding", "10px")
+        .style("position", "absolute");
 
-  let showTooltip = function (event, d) {
-    tooltip
-      .style("opacity", 1)
-      .html("Month: " + d[0] + "<br>Deaths: " + d[1])
-      .style("left", event.pageX + 10 + "px")
-      .style("top", event.pageY - 10 + "px");
-  };
+      let showTooltip = function (event, d) {
+        tooltip
+          .style("opacity", 1)
+          .html("Month: " + d[0] + "<br>Deaths: " + d[1])
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 10 + "px");
+      };
 
-  let moveTooltip = function (event) {
-    tooltip
-      .style("left", event.pageX + 10 + "px")
-      .style("top", event.pageY - 10 + "px");
-  };
+      let moveTooltip = function (event) {
+        tooltip
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 10 + "px");
+      };
 
-  let hideTooltip = function () {
-    tooltip.style("opacity", 0);
-  };
+      let hideTooltip = function () {
+        tooltip.style("opacity", 0);
+      };
 
-  // Create the line generator
-  let line = d3.line()
-    .x(d => x(d[0]))
-    .y(d => y(d[1]))
-    .curve(d3.curveMonotoneX); // Optional: makes the line smooth
+      // Create the line generator
+      let line = d3.line()
+        .x(d => x(d[0]))
+        .y(d => y(d[1]))
+        .curve(d3.curveMonotoneX); // Optional: makes the line smooth
 
-  // Add the line path
-  svg.append("path")
-    .datum(this.deathsByMonth)
-    .attr("fill", "none")
-    .attr("stroke", "#121212")
-    .attr("stroke-width", 2)
-    .attr("d", line);
+      // Add the line path
+      svg.append("path")
+        .datum(this.deathsByMonth)
+        .attr("fill", "none")
+        .attr("stroke", "#121212")
+        .attr("stroke-width", 2)
+        .attr("d", line);
 
-  // Add circles for each data point
-  svg.selectAll("circle")
-    .data(this.deathsByMonth)
-    .enter()
-    .append("circle")
-    .attr("cx", d => x(d[0]))
-    .attr("cy", d => y(d[1]))
-    .attr("r", 4)
-    .attr("fill", "#121212")
-    .on("mouseover", showTooltip)
-    .on("mousemove", moveTooltip)
-    .on("mouseleave", hideTooltip)
-    .on("click", async (event, d) => {
-      await this.handleBarClick(d);
-    });
+      // Add circles for each data point
+      svg.selectAll("circle")
+        .data(this.deathsByMonth)
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d[0]))
+        .attr("cy", d => y(d[1]))
+        .attr("r", 4)
+        .attr("fill", "#121212")
+        .on("mouseover", showTooltip)
+        .on("mousemove", moveTooltip)
+        .on("mouseleave", hideTooltip)
+        .on("click", async (event, d) => {
+          await this.handleBarClick(d);
+        });
 
-  // X axis label
-  svg.append("text")
-    .attr("text-anchor", "middle")
-    .attr("x", width / 2)
-    .attr("y", height + margin.bottom - 10)
-    .attr("font-size", "12px")
-    .attr("font-weight", "bold")
-    .text("Month");
+      // X axis label
+      svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 10)
+        .attr("font-size", "12px")
+        .attr("font-weight", "bold")
+        .text("Month");
 
-  // Y axis label
-  svg.append("text")
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
-    .attr("x", -height / 2)
-    .attr("y", -margin.left + 20)
-    .attr("font-size", "12px")
-    .attr("font-weight", "bold")
-    .text("Death Count");
+      // Y axis label
+      svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", -margin.left + 20)
+        .attr("font-size", "12px")
+        .attr("font-weight", "bold")
+        .text("Death Count");
 
-  // Title
-  svg.append("text")
-    .attr("text-anchor", "middle")
-    .attr("x", width / 2)
-    .attr("y", -margin.top / 2 + 10)
-    .attr("font-size", "16px")
-    .attr("font-weight", "bold")
-    .text("Deaths by Month");
+      // Title
+      svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", width / 2)
+        .attr("y", -margin.top / 2 + 10)
+        .attr("font-size", "16px")
+        .attr("font-weight", "bold")
+        .text("Deaths by Month");
     },
   },
 }

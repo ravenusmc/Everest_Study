@@ -50,6 +50,8 @@ def getDataForDrillDownGraphs():
         drilldown_data = get_data_object.drilldown_expedition_graph(post_data['expedition'], post_data['startDate'], post_data['endDate'])
       elif post_data.get('cause_of_death'):
         drilldown_data = get_data_object.drilldown_top_causes_of_death_graph(post_data['cause_of_death'], post_data['startDate'], post_data['endDate'])
+      elif post_data.get('month'): 
+        drilldown_data = get_data_object.common_months_for_death_drilldown(post_data['month'], post_data['startDate'], post_data['endDate'])
       print(drilldown_data)
       return jsonify(drilldown_data) 
 
