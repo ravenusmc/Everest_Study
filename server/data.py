@@ -318,7 +318,6 @@ class ExamineData():
     month_number = {v: k for k, v in enumerate(calendar.month_abbr)}.get(month_abbr)
     if month_number is None:
         raise ValueError(f"Invalid month abbreviation: {month_abbr}")
-
     # Filter by date range, month, and valid dates
     filtered_data = self.data[
         (self.data['Date_clean'].notnull()) &
@@ -326,7 +325,6 @@ class ExamineData():
         (self.data['Date_clean'] <= end_dt) &
         (self.data['Date_clean'].dt.month == month_number)
     ]
-
     # Columns to include
     selected_columns = [
         'Name', 'Date', 'Age', 'Expedition',

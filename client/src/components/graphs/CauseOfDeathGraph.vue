@@ -38,7 +38,7 @@ export default {
       // Await the response from the testMe action
       const response = await this.getDataForDrillDown(payload);
       
-      // //Function to create a table from JSON data
+      //Function to create a table from JSON data
       function createTableFromJson(data) {
         let table =
           '<table border="1" cellpadding="4" cellspacing="0">' +
