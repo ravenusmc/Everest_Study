@@ -62,9 +62,10 @@ const getters = {
 const actions = {
 
 	getDataForGraphs: ({ commit }) => {
-		const path = 'http://localhost:5000/getDataForGraphs';
+		const path = 'http://localhost:5000/getInitialDataForGraphs';
 		axios.get(path)
 			.then((res) => {
+        console.log(res.data)
 				commit('setDeathsByStates', res.data)
 			})
 			.catch((error) => {

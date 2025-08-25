@@ -12,6 +12,7 @@
 import JumbotronComponent from '../components/landing/JumbotronComponent.vue'
 import MidSectionComponent from '../components/landing/MidSectionComponent.vue'
 import LowerSectionComponent from '../components/landing/LowerSectionComponent.vue'
+import { mapActions } from "vuex";
 
 export default {
   name: "HomeView",
@@ -19,7 +20,16 @@ export default {
     JumbotronComponent,
     MidSectionComponent,
     LowerSectionComponent,
-  }
+  },
+  mounted() {
+    this.setUpDataForGraphs();
+  },  
+  methods: {
+    ...mapActions("datapage", ["getDataForGraphs"]),
+    setUpDataForGraphs() {
+      this.getDataForGraphs();
+    }
+  },
 };
 </script>
 

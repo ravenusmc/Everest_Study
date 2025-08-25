@@ -12,6 +12,17 @@ app.config.from_object(__name__)
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+# Some of the graphs will need the data grabbed as soon as the page loads. 
+@app.route('/getInitialDataForGraphs', methods=['GET'])
+def getInitialDataForGraphs():
+  if request.method == 'GET':
+    data_dictionary = {}
+    get_data_object = ExamineData()
+    # post_data = request.get_json()
+    heat_map_location_cause_of_death_data= get_data_object.heat_map_location_cause_of_death()
+    data_dictionary['Heat_Map_Data'] = heat_map_location_cause_of_death_data
+    return jsonify(data_dictionary)
+
 # This route will handle the bar chart graphs. 
 @app.route('/getDataBasedOnFilters', methods=['GET', 'POST'])
 def getDataBasedOnFilters():
