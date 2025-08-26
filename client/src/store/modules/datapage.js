@@ -42,7 +42,9 @@ const data = {
     ['Sep', 28], 
     ['Oct', 36], 
     ['Nov', 1], 
-    ['Dec', 4]],
+    ['Dec', 4]
+  ],
+  heatMapCauseLocationData: [],
   startDate: "1921-06-05",
   endDate: "2025-05-15",
   bins: 10, 
@@ -54,6 +56,7 @@ const getters = {
   deathsByExpedition: (state) => state.deathsByExpedition,
   causeOfDeath: (state) => state.causeOfDeath,
   deathsByMonth: (state) => state.deathsByMonth,
+  heatMapCauseLocationData: (state) => state.heatMapCauseLocationData,
   startDate: (state) => state.startDate, 
   endDate: (state) => state.endDate, 
   bins: (state) => state.bins, 
