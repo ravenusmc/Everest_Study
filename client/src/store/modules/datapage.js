@@ -68,8 +68,7 @@ const actions = {
 		const path = 'http://localhost:5000/getInitialDataForGraphs';
 		axios.get(path)
 			.then((res) => {
-        console.log(res.data)
-				commit('setDeathsByStates', res.data)
+				commit('setHeatMapCauseLocationData', res.data['Heat_Map_Data'])
 			})
 			.catch((error) => {
 				console.log(error);
@@ -128,6 +127,10 @@ const mutations = {
 
   setDeathsByMonth(state, value) {
     state.deathsByMonth = value
+  },
+
+  setHeatMapCauseLocationData(state, value) {
+    state.heatMapCauseLocationData = value
   },
 
   setStatesDeathsDrillDown(state, value) {
