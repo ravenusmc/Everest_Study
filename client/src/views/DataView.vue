@@ -13,6 +13,9 @@
             <CauseOfDeathGraph />
             <DeathsByMonthGraph />
         </div>
+        <div class="heat-map-graphs">
+            <HeatMapCauseLocation />
+        </div>
     </div>
 </template>
 
@@ -24,6 +27,7 @@ import DeathsGraph from '@/components/graphs/DeathsGraph.vue'
 import ExpeditionsGraph from '@/components/graphs/ExpeditionsGraph.vue'
 import CauseOfDeathGraph from '@/components/graphs/CauseOfDeathGraph.vue'
 import DeathsByMonthGraph from '@/components/graphs/DeathsByMonth.vue'
+import HeatMapCauseLocation from '@/components/graphs/HeatMapCauseLocation.vue'
 
 export default {
 	name: "DataView",
@@ -35,6 +39,7 @@ export default {
     CauseOfDeathGraph,
     DeathsByMonthGraph,
     OverView,
+    HeatMapCauseLocation,
   },
 };
 
@@ -49,6 +54,10 @@ export default {
 .graphs-div {
   display: grid; 
   grid-template-columns: 1fr 1fr 1fr;
+}
+
+.heat-map-graphs {
+
 }
 
 </style>
