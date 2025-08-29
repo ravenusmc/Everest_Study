@@ -10,4 +10,13 @@
 
 <script>
 
+export default {
+  name: "CauseLocationHeatMap",
+  computed: {
+    ...mapGetters("datapage", [
+      "heatMapCauseLocationData",
+    ]),
+  },
+}
+
 </script>
