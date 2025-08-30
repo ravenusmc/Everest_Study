@@ -68,6 +68,7 @@ const actions = {
 		const path = 'http://localhost:5000/getInitialDataForGraphs';
 		axios.get(path)
 			.then((res) => {
+        console.log(res.data['Heat_Map_Data'])
 				commit('setHeatMapCauseLocationData', res.data['Heat_Map_Data'])
 			})
 			.catch((error) => {
