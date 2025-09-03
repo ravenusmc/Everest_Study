@@ -6,16 +6,19 @@
         <div class="filter-div">
             <MainFilter />
         </div>
-        <div class="graphs-div">
+          <div class="first-row">
             <StatesGraph />
             <DeathsGraph />
             <ExpeditionsGraph />
+          </div>
+          <div class="second-row">
             <CauseOfDeathGraph />
             <DeathsByMonthGraph />
-        </div>
-        <div class="heat-map-graphs">
+          </div>
+        <!-- May use this at a future date -->
+        <!-- <div class="heat-map-graphs">
             <HeatMapCauseLocation />
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -27,7 +30,8 @@ import DeathsGraph from '@/components/graphs/DeathsGraph.vue'
 import ExpeditionsGraph from '@/components/graphs/ExpeditionsGraph.vue'
 import CauseOfDeathGraph from '@/components/graphs/CauseOfDeathGraph.vue'
 import DeathsByMonthGraph from '@/components/graphs/DeathsByMonth.vue'
-import HeatMapCauseLocation from '@/components/graphs/HeatMapCauseLocation.vue'
+// May use this at a future date
+// import HeatMapCauseLocation from '@/components/graphs/HeatMapCauseLocation.vue'
 
 export default {
 	name: "DataView",
@@ -39,7 +43,8 @@ export default {
     CauseOfDeathGraph,
     DeathsByMonthGraph,
     OverView,
-    HeatMapCauseLocation,
+    // May use this at a future date
+    // HeatMapCauseLocation,
   },
 };
 
@@ -51,14 +56,19 @@ export default {
     border: 2px solid red;
 }
 
-.graphs-div {
+.first-row {
   display: grid; 
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.heat-map-graphs {
-
+.second-row {
+  display: grid;
+  grid-template-columns: auto auto; /* make them only as wide as their content */
+  justify-content: center; /* center horizontally */
+  align-items: center; /* center vertically (if row taller) */
+  gap: 15rem; /* optional space between graphs */
 }
+
 
 </style>
 
