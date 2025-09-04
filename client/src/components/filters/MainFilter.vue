@@ -1,66 +1,130 @@
 <template>
-    <div>
-      <form>
-        <div>
-          <label for="ammo">Select Number of States to See:</label>
-          <select v-model="numberOfStates">
-            <option disabled value="">Please select one</option>
-            <option v-for="state in numberOfStatesOptions" :key="state" :value="state">
-              {{ state }}
-            </option>
-          </select>
-        </div>
-        <div>
-          <label>Enter Number of bins for range of years:</label>
-          <select v-model="numberOfBins">
-            <option disabled value="">Please select one</option>
-            <option v-for="bins in numberOfBinsOptions" :key="bins" :value="bins">
-              {{ bins }}
-            </option>
-          </select>
-        </div>
-        <div>
-          <label>Number of Expeditions:</label>
-          <select v-model="numberOfExpeditions">
-            <option disabled value="">Please select one</option>
-            <option v-for="bins in numberOfExpeditionsOptions" :key="bins" :value="bins">
-              {{ bins }}
-            </option>
-          </select>
-        </div>
-        <div>
-          <label>Enter Number to see more causes of death:</label>
-          <select v-model="numberOfCausesOfDeath">
-            <option disabled value="">Please select one</option>
-            <option v-for="bins in numberOfCausesOfDeathOptions" :key="bins" :value="bins">
-              {{ bins }}
-            </option>
-          </select>
-        </div>
-        <div>
-          <label for="startDate">Start Date:</label>
-            <input
-              type="date"
-              id="startDate"
-              v-model="startDate"
-              :min="minDate"
-              :max="maxDate"
-            /><br><br>
+  <div class="flex justify-center items-center p-6">
+    <form
+      class="bg-white shadow-lg rounded-2xl p-8 max-w-xl w-full space-y-6"
+    >
+      <!-- Number of States -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">
+          Select Number of States to See:
+        </label>
+        <select
+          v-model="numberOfStates"
+          class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+        >
+          <option disabled value="">Please select one</option>
+          <option
+            v-for="state in numberOfStatesOptions"
+            :key="state"
+            :value="state"
+          >
+            {{ state }}
+          </option>
+        </select>
+      </div>
 
-            <label for="endDate">End Date:</label>
-            <input
-              type="date"
-              id="endDate"
-              v-model="endDate"
-              :min="minDate"
-              :max="maxDate"
-            /><br><br>
+      <!-- Number of Bins -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">
+          Enter Number of bins for range of years:
+        </label>
+        <select
+          v-model="numberOfBins"
+          class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+        >
+          <option disabled value="">Please select one</option>
+          <option
+            v-for="bins in numberOfBinsOptions"
+            :key="bins"
+            :value="bins"
+          >
+            {{ bins }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Number of Expeditions -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">
+          Number of Expeditions:
+        </label>
+        <select
+          v-model="numberOfExpeditions"
+          class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+        >
+          <option disabled value="">Please select one</option>
+          <option
+            v-for="bins in numberOfExpeditionsOptions"
+            :key="bins"
+            :value="bins"
+          >
+            {{ bins }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Causes of Death -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">
+          Enter Number to see more causes of death:
+        </label>
+        <select
+          v-model="numberOfCausesOfDeath"
+          class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+        >
+          <option disabled value="">Please select one</option>
+          <option
+            v-for="bins in numberOfCausesOfDeathOptions"
+            :key="bins"
+            :value="bins"
+          >
+            {{ bins }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Date Range -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="startDate" class="block text-gray-700 font-medium mb-2">
+            Start Date:
+          </label>
+          <input
+            type="date"
+            id="startDate"
+            v-model="startDate"
+            :min="minDate"
+            :max="maxDate"
+            class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+          />
         </div>
-        <div class="form-group">
-          <button class='styled-button' type="button" @click="submitNumberStatesToServer">Submit</button>
+        <div>
+          <label for="endDate" class="block text-gray-700 font-medium mb-2">
+            End Date:
+          </label>
+          <input
+            type="date"
+            id="endDate"
+            v-model="endDate"
+            :min="minDate"
+            :max="maxDate"
+            class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+          />
         </div>
-      </form>
-    </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="pt-4">
+        <button
+          class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-indigo-700 transition"
+          type="button"
+          @click="submitNumberStatesToServer"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -86,30 +150,25 @@ export default {
   },
   methods: {
     ...mapActions("datapage", ["getDataBasedOnFilters"]),
-    submitNumberStatesToServer() {
+    submitNumberStatesToServer(event) {
       event.preventDefault();
-      console.log(this.startDate)
       if (this.numberOfStates <= 0) {
         alert("Please Select a year greater than 0");
-      } 
-      else if (this.numberOfStates > 10) {
+      } else if (this.numberOfStates > 10) {
         alert("Please Select a Year Less than or equal to 10");
-      } 
-      else if (this.numberOfBins <= 0) {
-        alert("Please enter a number greater than 0")
-      }
-      else if (!this.startDate || !this.endDate) {
+      } else if (this.numberOfBins <= 0) {
+        alert("Please enter a number greater than 0");
+      } else if (!this.startDate || !this.endDate) {
         alert("Please select both start and end dates.");
-      }else if (this.startDate > this.endDate) {
+      } else if (this.startDate > this.endDate) {
         alert("Start date cannot be after end date.");
-      }
-      else {
+      } else {
         const payload = {
           numberOfStates: this.numberOfStates,
           numberOfBins: this.numberOfBins,
           numberOfExpeditions: this.numberOfExpeditions,
           numberOfCausesOfDeath: this.numberOfCausesOfDeath,
-          firstDate: this.startDate, 
+          firstDate: this.startDate,
           lastDate: this.endDate,
         };
         this.getDataBasedOnFilters({ payload });
@@ -118,5 +177,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
