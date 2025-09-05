@@ -6,7 +6,7 @@
       <!-- Number of States -->
       <div>
         <label class="block text-gray-700 font-medium mb-2">
-          Select Number of States to See:
+          Select Number of States to See: (Graph )
         </label>
         <select
           v-model="numberOfStates"
