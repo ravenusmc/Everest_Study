@@ -6,7 +6,7 @@
       <!-- Number of States -->
       <div>
         <label class="block text-gray-700 font-medium mb-2">
-          Select Number of States to See: (Graph )
+          Select Number of States to See: (Graph 1)
         </label>
         <select
           v-model="numberOfStates"
@@ -26,7 +26,7 @@
       <!-- Number of Bins -->
       <div>
         <label class="block text-gray-700 font-medium mb-2">
-          Enter Number of bins for range of years:
+          Enter Number of bins for range of years: (Graph 2)
         </label>
         <select
           v-model="numberOfBins"
@@ -46,7 +46,7 @@
       <!-- Number of Expeditions -->
       <div>
         <label class="block text-gray-700 font-medium mb-2">
-          Number of Expeditions:
+          Number of Expeditions: (Graph 3)
         </label>
         <select
           v-model="numberOfExpeditions"
@@ -66,7 +66,7 @@
       <!-- Causes of Death -->
       <div>
         <label class="block text-gray-700 font-medium mb-2">
-          Enter Number to see more causes of death:
+          Enter Number to see more causes of death: (Graph 4)
         </label>
         <select
           v-model="numberOfCausesOfDeath"

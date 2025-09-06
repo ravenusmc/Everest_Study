@@ -202,7 +202,7 @@ export default {
         .attr("y", -margin.top / 2 + 10)
         .attr("font-size", "16px")
         .attr("font-weight", "bold")
-        .text("Deaths by Month");
+        .text("Deaths by Month (Graph 5)");
     },
   },
 }

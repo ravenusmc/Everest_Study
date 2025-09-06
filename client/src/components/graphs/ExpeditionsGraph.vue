@@ -202,7 +202,7 @@ export default {
         .attr("y", -margin.top / 2 + 10) // Adjusted y position to be within the SVG
         .attr("font-size", "16px")
         .attr("font-weight", "bold")
-        .text("Deaths by Expedition");
+        .text("Deaths by Expedition (Graph 3)");
     },
     
     //Code to deal with the popup

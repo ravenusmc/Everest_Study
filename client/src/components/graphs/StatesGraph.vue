@@ -208,7 +208,7 @@ export default {
         .attr("y", -margin.top / 2 + 10) // Adjusted y position to be within the SVG
         .attr("font-size", "16px")
         .attr("font-weight", "bold")
-        .text("Deaths by Nation-State");
+        .text("Deaths by Nation-State (Graph 1)");
     },
 
     //Code to deal with the popup
