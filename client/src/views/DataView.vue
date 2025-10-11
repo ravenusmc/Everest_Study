@@ -52,10 +52,6 @@ export default {
 
 <style scoped>
 
-.filter-div {
-    border: 2px solid red;
-}
-
 .first-row {
   display: grid; 
   grid-template-columns: 1fr 1fr 1fr;
