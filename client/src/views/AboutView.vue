@@ -46,8 +46,11 @@
 </template>
 
   
-  <script>
-  </script>
+<script>
+export default {
+  name: 'AboutView',
+}
+</script>
   
 <style scoped>
 /* General section styling */

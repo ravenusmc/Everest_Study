@@ -36,13 +36,13 @@ import DeathsByMonthGraph from '@/components/graphs/DeathsByMonth.vue'
 export default {
 	name: "DataView",
 	components: {
-    StatesGraph,
+    OverView,
     MainFilter,
+    StatesGraph,
     DeathsGraph,
     ExpeditionsGraph,
     CauseOfDeathGraph,
     DeathsByMonthGraph,
-    OverView,
     // May use this at a future date
     // HeatMapCauseLocation,
   },

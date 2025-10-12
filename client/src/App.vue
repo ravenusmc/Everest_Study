@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <NavBar />
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
     <FootComponent />
   </div>
 </template>
+
 
 <script>
 import NavBar from "./components/common/NavBar.vue";

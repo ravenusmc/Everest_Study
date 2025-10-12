@@ -1,11 +1,13 @@
 <template>
-    <div>
-      <div ref="statesGraph"></div>
-      <div id="popup">
-        <div id="popupContent" class="popup-scroll"></div>
-        <button @click="closePopup">Close</button>
-      </div>
+  <div class="states-graph-container">
+    <div ref="statesGraph" class="graph"></div>
+
+    <!-- Popup -->
+    <div id="popup">
+      <div id="popupContent" class="popup-scroll"></div>
+      <button @click="closePopup">Close</button>
     </div>
+  </div>
 </template>
 
 <script>
@@ -15,10 +17,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "StatesGraph",
   computed: {
-    ...mapGetters("datapage", [
-      "deathsByStates",
-      "startDate",
-    ]),
+    ...mapGetters("datapage", ["deathsByStates", "startDate"]),
   },
   watch: {
     deathsByStates: {
@@ -28,40 +27,27 @@ export default {
   },
   mounted() {
     this.buildStateGraph();
-  },  
+  },
   methods: {
     ...mapActions("datapage", ["getDataForDrillDown"]),
+
     async handleBarClick(d) {
-
-      //Prepare the payload
-      const payload = { state: d[0]};
-
-      // Await the response from the testMe action
+      // Prepare payload
+      const payload = { state: d[0] };
       const response = await this.getDataForDrillDown(payload);
 
-      //Function to create a table from JSON data
+      // Convert data to table
       function createTableFromJson(data) {
         let table =
           '<table border="1" cellpadding="4" cellspacing="0">' +
           '<tr><th>Name</th><th>Age</th><th>Year Missing</th>' +
-          '<th>Expedition</th><th>Cause of Death</th><th>Location</th>'+ 
-          '</tr>';
+          '<th>Expedition</th><th>Cause of Death</th><th>Location</th></tr>';
 
         data.forEach((row) => {
-
-          // Split name into first and last - not going to use this but keeping this 
-          // in case I change my mind.
-          // let nameParts = row.Name ? row.Name.split(' ') : ['Unknown', ''];
-          // let firstName = nameParts.slice(0, -1).join(' ') || 'Unknown';
-          // let lastName = nameParts.slice(-1).join(' ') || '';
-
-          // Extract year from date
-          let year = row.Date ? new Date(row.Date).getFullYear() : 'Unknown';
-
-          // Handle missing fields
-          let age = row.Age !== null && row.Age !== undefined && row.Age !== 'nan' ? row.Age : 'Unknown';
-
-          // Add row to table
+          const year = row.Date ? new Date(row.Date).getFullYear() : "Unknown";
+          const age = row.Age !== null && row.Age !== undefined && row.Age !== "nan"
+            ? row.Age
+            : "Unknown";
           table += `<tr>
                       <td>${row.Name}</td>
                       <td>${age}</td>
@@ -76,153 +62,126 @@ export default {
         return table;
       }
 
-      // Display the popup with the count and response
+      // Show popup centered
       const popup = document.getElementById("popup");
       const content = document.getElementById("popupContent");
-      content.innerHTML = `${'Missing people from ' + d[0]}<br>${createTableFromJson(response)}`;
-
-      popup.style.display = "block";
-      popup.style.top = `${event.clientY + 10}px`;
-      popup.style.left = `${event.clientX + 10}px`;
+      content.innerHTML = `Missing people from ${d[0]}<br>${createTableFromJson(response)}`;
+      popup.style.display = "block"; // CSS handles centering
     },
+
+    closePopup() {
+      const popup = document.getElementById("popup");
+      if (popup) popup.style.display = "none";
+    },
+
     buildStateGraph() {
+      // Clear old SVG
+      d3.select(this.$refs.statesGraph).selectAll("*").remove();
 
-      // Clear previous SVG elements
-      d3.select(this.$refs.statesGraph).select("svg").remove();
-      
-      // set the dimensions and margins of the graph
-      let margin = { top: 50, right: 30, bottom: 50, left: 70 };
-      let width = 460 - margin.left - margin.right;
-      let height = 400 - margin.top - margin.bottom;
+      const margin = { top: 50, right: 30, bottom: 50, left: 70 };
+      const width = 460 - margin.left - margin.right;
+      const height = 400 - margin.top - margin.bottom;
 
-      // append the svg object to the div
-      let svg = d3
+      const svg = d3
         .select(this.$refs.statesGraph)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-      
-      // Add X axis
-      let x = d3
-        .scaleBand()
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+      // X axis
+      const x = d3.scaleBand()
         .range([0, width])
-        .domain(this.deathsByStates.map((d) => d[0]))
+        .domain(this.deathsByStates.map(d => d[0]))
         .padding(0.2);
-      svg
-        .append("g")
-        .attr("transform", "translate(0," + height + ")")
+      svg.append("g")
+        .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x));
 
-      // Add Y axis
-      let y = d3
-        .scaleLinear()
-        .domain([0, d3.max(this.deathsByStates, (d) => d[1])])
+      // Y axis
+      const y = d3.scaleLinear()
+        .domain([0, d3.max(this.deathsByStates, d => d[1])])
         .range([height, 0]);
       svg.append("g").call(d3.axisLeft(y));
 
-      // Create a tooltip div
-      let tooltip = d3
-        .select(this.$refs.statesGraph)
+      // Tooltip div
+      const tooltip = d3.select(this.$refs.statesGraph)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
+        .style("position", "absolute")
         .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "1px")
-        .style("border-radius", "5px")
-        .style("padding", "10px")
-        .style("position", "absolute");
-    
-        // Tooltip functions
-      let showTooltip = function (event, d) {
+        .style("border", "1px solid #ccc")
+        .style("padding", "8px")
+        .style("border-radius", "5px");
+
+      const showTooltip = (event, d) => {
         tooltip
           .style("opacity", 1)
-          .html("Nationality: " + d[0] + "<br>Number of Deaths: " + d[1])
+          .html(`State: ${d[0]}<br>Number of Deaths: ${d[1]}`)
           .style("left", event.pageX + 10 + "px")
           .style("top", event.pageY - 10 + "px");
       };
-
-      let moveTooltip = function (event) {
-        tooltip
-          .style("left", event.pageX + 10 + "px")
-          .style("top", event.pageY - 10 + "px");
+      const moveTooltip = (event) => {
+        tooltip.style("left", event.pageX + 10 + "px").style("top", event.pageY - 10 + "px");
       };
-
-      let hideTooltip = function () {
+      const hideTooltip = () => {
         tooltip.style("opacity", 0);
       };
 
-      // Add bars
-      let bars = svg
-        .selectAll("rect")
-        .data(this.deathsByStates);
-      
-      // Enter new bars
-      bars
+      // Bars
+      svg.selectAll("rect")
+        .data(this.deathsByStates)
         .enter()
         .append("rect")
-        .attr("x", (d) => x(d[0]))
-        .attr("y", height) // Initial position at the bottom of the chart
+        .attr("x", d => x(d[0]))
+        .attr("y", height)
         .attr("width", x.bandwidth())
-        .attr("height", 0) // Initial height 0 (so it grows with the animation)
+        .attr("height", 0)
         .attr("fill", "#121212")
-        .on("click", async (event, d) => {
-          await this.handleBarClick(d);
-        })
+        .on("click", (event, d) => this.handleBarClick(d, event))
         .on("mouseover", showTooltip)
         .on("mousemove", moveTooltip)
         .on("mouseleave", hideTooltip)
-        .transition() // Apply transition for the animation
+        .transition()
         .duration(1500)
-        .attr("y", (d) => y(d[1])) // Final Y position
-        .attr("height", (d) => height - y(d[1])); // Final height after transition
-      
-      // Add X axis label
-      svg
-        .append("text")
-        .attr("text-anchor", "middle")
+        .attr("y", d => y(d[1]))
+        .attr("height", d => height - y(d[1]));
+
+      // Labels
+      svg.append("text")
         .attr("x", width / 2)
-        .attr("y", height + margin.bottom - 10) // Adjusted y position to be within the SVG
-        .attr("font-size", "12px")
-        .attr("font-weight", "bold")
-        .text("Nationality");
-      
-      // Add Y axis label
-      svg
-        .append("text")
+        .attr("y", height + margin.bottom - 10)
         .attr("text-anchor", "middle")
+        .attr("font-weight", "bold")
+        .text("State");
+
+      svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("x", -height / 2)
         .attr("y", -margin.left + 20)
-        .attr("font-size", "12px")
+        .attr("text-anchor", "middle")
         .attr("font-weight", "bold")
         .text("Death Count");
 
-      // Add title
-      svg
-        .append("text")
-        .attr("text-anchor", "middle")
+      svg.append("text")
         .attr("x", width / 2)
-        .attr("y", -margin.top / 2 + 10) // Adjusted y position to be within the SVG
-        .attr("font-size", "16px")
+        .attr("y", -margin.top / 2 + 10)
+        .attr("text-anchor", "middle")
         .attr("font-weight", "bold")
-        .text("Deaths by Nation-State (Graph 1)");
-    },
-
-    //Code to deal with the popup
-    closePopup() {
-      const popup = document.getElementById("popup");
-      popup.style.display = "none";
+        .text("Deaths by State (Graph 2)");
     },
   },
-
-}
-
+};
 </script>
 
 <style scoped>
+div[ref="statesGraph"] {
+  position: relative;
+  z-index: 0;
+}
+
 #popup {
   z-index: 1000;
   display: none;
@@ -250,7 +209,8 @@ export default {
   width: 100%;
 }
 
-#popup th, #popup td {
+#popup th,
+#popup td {
   padding: 8px;
   text-align: left;
 }
