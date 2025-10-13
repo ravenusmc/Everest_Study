@@ -8,6 +8,7 @@
       </div>
       <div class="navlinks-right">
         <router-link class="navlink link-style" to="/login">Login</router-link>
+         <router-link class="navlink link-style" to="/signup">Sign Up</router-link>
       </div>
     </nav>
   </div>
