@@ -31,50 +31,31 @@
   </script>
   
   <style scoped>
-  .footer {
-    background-color: #121212;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .footer-text {
-    font-size: 36px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  
-  .social-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-  }
+.footer {
+  background-color: #121212;
+  color: white;
+  padding: 40px 0;       /* adjust padding instead of fixed height */
+  text-align: center;
+  font-family: Arial, sans-serif;
+  /* remove fixed height and margin-top which cause layout issues */
+  height: auto;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .icon-link i {
-  font-size: 4rem; /* Adjust this value as needed */
-  }
+/* container and icons */
+.container { max-width: 1200px; margin:0 auto; display:flex; flex-direction:column; gap:12px; align-items:center; }
+.footer-text { font-size: 20px; text-transform: uppercase; margin:0; }
+.social-icons { display:flex; justify-content:center; align-items:center; gap:20px; }
+.icon-link i { font-size: 2rem; } /* scale down a bit */
+.icon-link { color:white; font-size: 20px; transition: color .3s; }
+.icon-link:hover { color:#1abc9c; }
 
-  .icon-link {
-    color: white;
-    font-size: 24px;
-    transition: color 0.3s ease;
-  }
-  
-  .icon-link:hover {
-    color: #1abc9c;
-  }
+/* small screens */
+@media (max-width: 480px) {
+  .signup-box { padding: 1.5rem; width: 100%; }
+  .footer-text { font-size: 18px; }
+}
   </style>

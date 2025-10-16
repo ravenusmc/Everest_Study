@@ -22,12 +22,18 @@ export default {
 
 <style>
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .center {
   text-align: center;
 }
 
-.main-project-div {
+/* .main-project-div {
   margin: 0 5%;
-}
+} */
 
 </style>

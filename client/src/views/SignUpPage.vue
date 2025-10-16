@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "SignUpPage",
   data() {
@@ -44,13 +46,22 @@ export default {
     };
   },
   methods: {
+    ...mapActions("user", ["signUpUser"]),
     handleSubmit() {
       if (this.form.password !== this.form.verifyPassword) {
         alert("Passwords do not match!");
         return;
       }
+      const payload = {
+        username: this.username,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+      };
       console.log("Form submitted:", this.form);
       alert("Account created successfully!");
+      this.signUpUser({ payload });
     },
   },
 };
@@ -62,10 +73,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh; /* modern browsers will prefer this */
   background: linear-gradient(to right, #e0eafc, #cfdef3);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+
 
 /* White box for the form */
 .signup-box {
