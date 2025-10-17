@@ -60,7 +60,6 @@ export default {
         password: this.password,
       };
       console.log("Form submitted:", this.form);
-      alert("Account created successfully!");
       this.signUpUser({ payload });
     },
   },
