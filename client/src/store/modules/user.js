@@ -18,17 +18,18 @@ const getters = {
 
 const actions = {
 
-	signUpUser: ( { payload }) => {
+	signUpUser: (context, payload) => {
         console.log('ACTION')
         console.log(payload)
-		// const path = 'http://localhost:5000/signUpUser';
-		// axios.post(path, payload)
-		// 	.then((res) => {
-		// 		router.push({ name: 'login'})
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log(error);
-		// 	});
+		const path = 'http://localhost:5000/signUpUser';
+		axios.post(path, payload)
+			.then((res) => {
+                console.log(res)
+				router.push({ name: 'login'})
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	},
 
 	loginUser: ({ commit }, { payload }) => {

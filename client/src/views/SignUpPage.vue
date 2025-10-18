@@ -53,13 +53,12 @@ export default {
         return;
       }
       const payload = {
-        username: this.username,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
+        username: this.form.username,
+        firstName: this.form.firstName,
+        lastName: this.form.lastName,
+        email: this.form.email,
+        password: this.form.password,
       };
-      console.log("Form submitted:", this.form);
       this.signUpUser({ payload });
     },
   },

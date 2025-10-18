@@ -22,6 +22,20 @@ def getInitialDataForGraphs():
     heat_map_location_cause_of_death_data= get_data_object.heat_map_location_cause_of_death()
     data_dictionary['Heat_Map_Data'] = heat_map_location_cause_of_death_data
     return jsonify(data_dictionary)
+  
+#Route to sign up user
+@app.route('/signUpUser', methods=['OPTIONS', 'POST'])
+def signUpUser():
+    if request.method == 'OPTIONS':  # Handle preflight request
+        return jsonify({'message': 'Preflight request successful'}), 200
+    if request.method == 'POST':
+        # db_obj = Connection()
+        post_data = request.get_json()  
+        print(post_data)
+        # hashed = db_obj.encrypt_pass(post_data)
+        # db_obj.insert(post_data, hashed)
+        return jsonify('5')
+
 
 # This route will handle the bar chart graphs. 
 @app.route('/getDataBasedOnFilters', methods=['GET', 'POST'])
