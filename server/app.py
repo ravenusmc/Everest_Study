@@ -27,8 +27,6 @@ def getInitialDataForGraphs():
         return jsonify(data_dictionary)
 
 # Route to sign up user
-
-
 @app.route('/signUpUser', methods=['OPTIONS', 'POST'])
 def signUpUser():
     if request.method == 'OPTIONS':  # Handle preflight request
