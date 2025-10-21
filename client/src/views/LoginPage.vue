@@ -30,17 +30,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions("user", ["signUpUser"]),
+    ...mapActions("user", ["loginUser"]),
     handleLogin() {
-      if (this.form.password !== this.form.verifyPassword) {
-        alert("Passwords do not match!");
-        return;
-      }
       const payload = {
         username: this.form.username,
         password: this.form.password,
       };
-      this.signUpUser({ payload });
+      this.loginUser({ payload });
     },
   },
 };

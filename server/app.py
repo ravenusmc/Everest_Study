@@ -36,8 +36,24 @@ def signUpUser():
         post_data = request.get_json()
         hashed = db_obj.encrypt_pass(post_data)
         db_obj.insert(post_data, hashed)
-        print('yay!')
         return jsonify('5')
+
+#Route to login
+@app.route('/login', methods=['OPTIONS', 'POST'])
+def login():
+    if request.method == 'OPTIONS':  # Handle preflight request
+        return jsonify({'message': 'Preflight request successful'}), 200
+    if request.method == 'POST':
+        db_obj = Connection()
+        post_data = request.get_json()
+        print(post_data)
+        # email = post_data['email']
+        # password = post_data['password']  
+        # # Checking to see if the user is in the database
+        # login_flag, not_found, password_no_match, user = db_obj.verify_user(
+        #     email, password)
+        # flags = [login_flag, not_found, password_no_match, user]
+        return jsonify(flags)
 
 
 # This route will handle the bar chart graphs.
