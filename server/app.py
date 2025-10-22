@@ -46,15 +46,14 @@ def login():
     if request.method == 'POST':
         db_obj = Connection()
         post_data = request.get_json()
-        print(post_data)
-        # email = post_data['email']
-        # password = post_data['password']  
+        email = post_data['username']
+        password = post_data['password']  
         # # Checking to see if the user is in the database
-        # login_flag, not_found, password_no_match, user = db_obj.verify_user(
-        #     email, password)
+        login_flag, not_found, password_no_match, user = db_obj.verify_user(
+            email, password)
+        print(login_flag)
         # flags = [login_flag, not_found, password_no_match, user]
-        return jsonify(flags)
-
+        return jsonify('5')
 
 # This route will handle the bar chart graphs.
 @app.route('/getDataBasedOnFilters', methods=['GET', 'POST'])
