@@ -54,6 +54,8 @@ class Connection():
             if bcrypt.checkpw(password, hashed):
                 user["id"] = row[0]
                 user['username'] = row[1]
+                user['firstName'] = row[2]
+                user['lastName'] = row[3]
                 login_flag = True
                 not_found = False
                 password_no_match = False

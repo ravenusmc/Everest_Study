@@ -51,8 +51,7 @@ def login():
         # # Checking to see if the user is in the database
         login_flag, not_found, password_no_match, user = db_obj.verify_user(
             email, password)
-        print(login_flag)
-        # flags = [login_flag, not_found, password_no_match, user]
+        flags = [login_flag, not_found, password_no_match, user]
         return jsonify('5')
 
 # This route will handle the bar chart graphs.
