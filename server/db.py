@@ -59,7 +59,7 @@ class Connection():
                 login_flag = True
                 not_found = False
                 password_no_match = False
-            # This is a final catch all area. Basically if the password does not match
+            # This is a final catch all area. If the password does not match
             # the user is not getting in.
             else:
                 login_flag = False
