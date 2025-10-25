@@ -7,16 +7,28 @@
         <router-link class="navlink link-style" to="/about">About</router-link>
       </div>
       <div class="navlinks-right">
-        <router-link class="navlink link-style" to="/login">Login</router-link>
-         <router-link class="navlink link-style" to="/signup">Sign Up</router-link>
+        <router-link v-if="!loginFlag" class="navlink link-style" to="/login">Login</router-link>
+        <router-link v-if="!loginFlag" class="navlink link-style" to="/signup">Sign Up</router-link>
+        <a v-if="loginFlag" @click.prevent="logoutUser"><router-link  class="navlink link-style" to="/">Log Out</router-link></a>
       </div>
     </nav>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "NavBar",
+  computed: {
+    ...mapGetters("user", ["passwordNoMatch", "loginFlag"]),
+  },
+  methods: {
+  ...mapActions("user", ["logout"]),
+  logoutUser: function () {
+    this.logout();
+    },
+  },
 }
 </script>
 

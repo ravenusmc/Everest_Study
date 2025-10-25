@@ -11,7 +11,6 @@ const data = {
 };
 
 const getters = {
-	// userNotFound: (state) => state.userNotFound,
 	passwordNoMatch: (state) => state.passwordNoMatch,
 	loginFlag: (state) => state.loginFlag,
 };
@@ -19,12 +18,9 @@ const getters = {
 const actions = {
 
 	signUpUser: (context, payload) => {
-        console.log('ACTION')
-        console.log(payload)
 		const path = 'http://localhost:5000/signUpUser';
 		axios.post(path, payload)
-			.then((res) => {
-                console.log(res)
+			.then(() => {
 				router.push({ name: 'login'})
 			})
 			.catch((error) => {
@@ -33,7 +29,6 @@ const actions = {
 	},
 
 	loginUser: ({ commit }, { payload }) => {
-		console.log('HERE')
 		const path = 'http://localhost:5000/login';
 		axios.post(path, payload)
 			.then((res) => {
@@ -43,7 +38,6 @@ const actions = {
 						router.push({ name: 'DataView' });
 					}else {
 						commit('setLoginFlag', res.data[0]);
-						// commit('setUserNotFound', res.data[1]);
 						commit('setNoPasswordMatch', res.data[2]);
 					}
 				} 
@@ -54,7 +48,7 @@ const actions = {
 	},
 
 	logout: ({ commit }) => {
-		commit('setUserNotFound', false);
+    console.log("HERE MIKE!");
 		commit('setNoPasswordMatch', false);
 		commit('setLoginFlag', false);
 	},
