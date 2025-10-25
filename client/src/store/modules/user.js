@@ -40,7 +40,7 @@ const actions = {
 				if (res.data) {
 					if (res.data[0] === true) {
 						commit('setLoginFlag', res.data[0]);
-						router.push({ name: 'library' });
+						router.push({ name: 'DataView' });
 					}else {
 						commit('setLoginFlag', res.data[0]);
 						// commit('setUserNotFound', res.data[1]);

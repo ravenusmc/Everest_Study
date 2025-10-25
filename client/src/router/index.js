@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-// import store from '@/store/index';
+import store from '@/store/index';
 
 Vue.use(VueRouter)
 
@@ -19,7 +19,21 @@ const routes = [
     {
       path: '/data',
       name: 'DataView',
-      component: () => import('../views/DataView.vue')
+      component: () => import('../views/DataView.vue'),
+      beforeEnter: (to, from, next) => {
+        if (store.state.user.loginFlag === false) {
+          next('/login');
+        } else {
+          next();
+        }
+    },
+    beforeRouteLeave: (to, from, next) => {
+      if (store.state.user.loginFlag === false) {
+        next('/login');
+      } else {
+        next();
+      }
+    },
     },
     {
       path: '/login',

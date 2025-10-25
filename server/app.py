@@ -52,7 +52,7 @@ def login():
         login_flag, not_found, password_no_match, user = db_obj.verify_user(
             email, password)
         flags = [login_flag, not_found, password_no_match, user]
-        return jsonify('5')
+        return jsonify(flags)
 
 # This route will handle the bar chart graphs.
 @app.route('/getDataBasedOnFilters', methods=['GET', 'POST'])
