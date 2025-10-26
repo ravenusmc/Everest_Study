@@ -9,6 +9,7 @@
 
         <label>Password</label>
         <input v-model="form.password" type="password" placeholder="Enter password" required />
+        <p v-if="passwordNoMatch">Password Wrong</p>
 
         <button type="submit" class="signup-btn">Login</button>
       </form>
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "SignUpPage",
@@ -28,6 +29,9 @@ export default {
         password: "",
       },
     };
+  },
+   computed: {
+    ...mapGetters("user", ["passwordNoMatch", "loginFlag"]),
   },
   methods: {
     ...mapActions("user", ["loginUser"]),
@@ -53,8 +57,6 @@ export default {
   background: linear-gradient(to right, #e0eafc, #cfdef3);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-
-
 
 /* White box for the form */
 .signup-box {
@@ -129,5 +131,10 @@ export default {
 
 .signup-btn:active {
   transform: scale(0.98);
+}
+
+p {
+  color: red;
+  text-transform: uppercase;
 }
 </style>

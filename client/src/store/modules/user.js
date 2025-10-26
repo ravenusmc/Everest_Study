@@ -48,7 +48,6 @@ const actions = {
 	},
 
 	logout: ({ commit }) => {
-    console.log("HERE MIKE!");
 		commit('setNoPasswordMatch', false);
 		commit('setLoginFlag', false);
 	},
@@ -64,10 +63,6 @@ const mutations = {
 	setNoPasswordMatch(state, value) {
 		state.passwordNoMatch = value 
 	}, 
-
-	// setUserNotFound(state, value) {
-	// 	state.userNotFound
-	// },
 
 };
 
