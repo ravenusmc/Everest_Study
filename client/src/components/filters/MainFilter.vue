@@ -1,7 +1,8 @@
 <template>
   <div class="flex justify-center items-center p-6">
     <form
-      class="bg-white shadow-lg rounded-2xl p-8 max-w-xl w-full space-y-6"
+      class="bg-white shadow-lg rounded-2xl p-8 max-w-7xl w-full grid gap-6 md:grid-cols-3 lg:grid-cols-4"
+      @submit.prevent="submitNumberStatesToServer"
     >
       <!-- Number of States -->
       <div>
@@ -13,11 +14,7 @@
           class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
         >
           <option disabled value="">Please select one</option>
-          <option
-            v-for="state in numberOfStatesOptions"
-            :key="state"
-            :value="state"
-          >
+          <option v-for="state in numberOfStatesOptions" :key="state" :value="state">
             {{ state }}
           </option>
         </select>
@@ -33,11 +30,7 @@
           class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
         >
           <option disabled value="">Please select one</option>
-          <option
-            v-for="bins in numberOfBinsOptions"
-            :key="bins"
-            :value="bins"
-          >
+          <option v-for="bins in numberOfBinsOptions" :key="bins" :value="bins">
             {{ bins }}
           </option>
         </select>
@@ -53,11 +46,7 @@
           class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
         >
           <option disabled value="">Please select one</option>
-          <option
-            v-for="bins in numberOfExpeditionsOptions"
-            :key="bins"
-            :value="bins"
-          >
+          <option v-for="bins in numberOfExpeditionsOptions" :key="bins" :value="bins">
             {{ bins }}
           </option>
         </select>
@@ -83,42 +72,41 @@
         </select>
       </div>
 
-      <!-- Date Range -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label for="startDate" class="block text-gray-700 font-medium mb-2">
-            Start Date:
-          </label>
-          <input
-            type="date"
-            id="startDate"
-            v-model="startDate"
-            :min="minDate"
-            :max="maxDate"
-            class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-          />
-        </div>
-        <div>
-          <label for="endDate" class="block text-gray-700 font-medium mb-2">
-            End Date:
-          </label>
-          <input
-            type="date"
-            id="endDate"
-            v-model="endDate"
-            :min="minDate"
-            :max="maxDate"
-            class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-          />
-        </div>
+      <!-- Start Date -->
+      <div>
+        <label for="startDate" class="block text-gray-700 font-medium mb-2">
+          Start Date:
+        </label>
+        <input
+          type="date"
+          id="startDate"
+          v-model="startDate"
+          :min="minDate"
+          :max="maxDate"
+          class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+        />
+      </div>
+
+      <!-- End Date -->
+      <div>
+        <label for="endDate" class="block text-gray-700 font-medium mb-2">
+          End Date:
+        </label>
+        <input
+          type="date"
+          id="endDate"
+          v-model="endDate"
+          :min="minDate"
+          :max="maxDate"
+          class="w-full rounded-xl border border-gray-300 px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+        />
       </div>
 
       <!-- Submit -->
-      <div class="pt-4">
+      <div class="md:col-span-3 lg:col-span-4 pt-4">
         <button
           class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-indigo-700 transition"
-          type="button"
-          @click="submitNumberStatesToServer"
+          type="submit"
         >
           Submit
         </button>
@@ -177,3 +165,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+form {
+  /* Overriding Tailwind’s vertical spacing */
+  display: grid;
+}
+</style>
