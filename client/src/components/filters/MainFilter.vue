@@ -39,7 +39,7 @@
       <!-- Number of Expeditions -->
       <div>
         <label class="block text-gray-700 font-medium mb-2">
-          Number of Expeditions: (Graph 3)
+          Enter Number of Expeditions: (Graph 3)
         </label>
         <select
           v-model="numberOfExpeditions"
@@ -102,12 +102,11 @@
         />
       </div>
 
-      <!-- Submit -->
+      <!-- Submit button -->
       <div class="md:col-span-3 lg:col-span-4 pt-4">
         <button
           class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-indigo-700 transition"
-          type="submit"
-        >
+          type="submit">
           Submit
         </button>
       </div>
