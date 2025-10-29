@@ -105,7 +105,7 @@
       <!-- Submit button -->
       <div class="md:col-span-3 lg:col-span-4 pt-4">
         <button
-          class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-indigo-700 transition"
+          class="w-24 bg-indigo-600 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-indigo-700 transition"
           type="submit">
           Submit
         </button>

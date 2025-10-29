@@ -1,9 +1,9 @@
 <template>
     <div>
-      <div>
+      <div class="main-div">
         <div class="lower-image">
           <div class="text-div">
-            <h5 class="text">The Data</h5>
+            <h5 class="text"><router-link class="text" to="/data">The Data</router-link></h5>
           </div>
         </div>
       </div>
@@ -14,6 +14,10 @@
 </script>
 
 <style scoped>
+.main-div {
+  margin-bottom: 50px;
+}
+
 .lower-image {
   display: flex;
   flex-direction: column;
@@ -28,7 +32,6 @@
 
 .text-div {
   background-color: rgba(0, 0, 0, 0.7);
-
   padding: 5%;
   border-radius: 100%;
 }
