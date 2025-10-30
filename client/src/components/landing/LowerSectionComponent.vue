@@ -3,7 +3,7 @@
       <div class="main-div">
         <div class="lower-image">
           <div class="text-div">
-            <h5 class="text"><router-link class="text" to="/data">The Data</router-link></h5>
+            <h5><router-link class="text" to="/data">The Data</router-link></h5>
           </div>
         </div>
       </div>
