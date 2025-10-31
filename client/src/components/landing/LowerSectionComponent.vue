@@ -3,6 +3,7 @@
       <div class="main-div">
         <div class="lower-image">
           <div class="text-div">
+            <!-- Link to sign in page if not signed in -->
             <h5><router-link class="text" to="/data">The Data</router-link></h5>
           </div>
         </div>
