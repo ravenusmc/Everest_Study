@@ -41,6 +41,11 @@
   color: white;
   font-size: 3em;
   text-transform: uppercase;
+  text-decoration: none;
+}
+
+.text:hover {
+  color: rgb(190, 184, 188);
 }
 
 
