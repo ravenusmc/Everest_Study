@@ -13,3 +13,5 @@ CREATE TABLE users
   password VARCHAR(240) NOT NUll,
   PRIMARY KEY(user_id)
 );
+
+:key="$route.fullPath"

@@ -152,34 +152,36 @@ class ExamineData():
         self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
         errors='coerce'
     )
+
     # Convert input start/end dates to datetime
     start_dt = pd.to_datetime(startDate)
     end_dt = pd.to_datetime(endDate)
-        # Filter rows by date range
+
+    # Filter rows by date range
     filtered_data = self.data[
         (self.data['Date_clean'] >= start_dt) & (self.data['Date_clean'] <= end_dt)
     ]
-    # Group by Nationality
+
+    # Group by Expedition
     counts = (
         filtered_data.groupby('Expedition')
         .size()
         .reset_index(name='Death Count')
     )
-    expeditions_list = []
-    # Drop missing or empty Nationality values
+
+    # Drop missing or empty Expedition values
     counts = counts[counts['Expedition'].notnull() & (counts['Expedition'] != '')]
-    # Sort by Death Count descending and take top 3
+
+    # Sort and take top N expeditions
     expeditions = counts.sort_values(by='Death Count', ascending=False).head(number_of_expeditions)
-    count = 0
-    while count <= number_of_expeditions - 1:
-      rows = []
-      expedition = expeditions.iloc[count][0]
-      deaths = int(expeditions.iloc[count][1])
-      rows.append(expedition)
-      rows.append(deaths)
-      expeditions_list.append(rows)
-      count += 1 
+
+    # Build list safely
+    expeditions_list = []
+    for _, row in expeditions.iterrows():
+        expeditions_list.append([row['Expedition'], int(row['Death Count'])])
+
     return expeditions_list
+
   
   def drilldown_expedition_graph(self, expedition, startDate, endDate):
     # Clean and parse the Date column
@@ -213,38 +215,41 @@ class ExamineData():
     return drilldown_data
   
   def top_causes_of_death(self, number_of_causes, startDate, endDate):
-    cause_of_death_list = []
-    # Clean and parse the Date column (if not already cleaned)
+    # Parse and clean the Date column
     self.data['Date_clean'] = pd.to_datetime(
         self.data['Date'].str.extract(r'(\w+ \d{1,2}, \d{4})')[0],
         errors='coerce'
     )
+
     # Convert input start/end dates to datetime
     start_dt = pd.to_datetime(startDate)
     end_dt = pd.to_datetime(endDate)
+
     # Filter rows by date range
     filtered_data = self.data[
         (self.data['Date_clean'] >= start_dt) & (self.data['Date_clean'] <= end_dt)
     ]
+
+    # Group by cause of death
     counts = (
         filtered_data.groupby('Cause_of_Death')
         .size()
         .reset_index(name='Death Count')
     )
-    # Drop missing or empty Nationality values
+
+    # Drop missing or empty cause values
     counts = counts[counts['Cause_of_Death'].notnull() & (counts['Cause_of_Death'] != '')]
-    # Sort by Death Count descending and take top 3
+
+    # Sort and take top N causes
     cause_of_deaths_df = counts.sort_values(by='Death Count', ascending=False).head(number_of_causes)
-    count = 0
-    while count <= number_of_causes - 1:
-      rows = []
-      cause_of_death = cause_of_deaths_df.iloc[count][0]
-      deaths = int(cause_of_deaths_df.iloc[count][1])
-      rows.append(cause_of_death)
-      rows.append(deaths)
-      cause_of_death_list.append(rows)
-      count += 1
+
+    # Build list safely
+    cause_of_death_list = []
+    for _, row in cause_of_deaths_df.iterrows():
+        cause_of_death_list.append([row['Cause_of_Death'], int(row['Death Count'])])
+
     return cause_of_death_list
+
 
   def drilldown_top_causes_of_death_graph(self, cause_of_death, startDate, endDate):
     # Clean and parse the Date column

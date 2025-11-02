@@ -60,6 +60,9 @@ export default {
   color: #e0e0e0; /* soft light text */
   border-radius: 8px;
   margin: 75px;
+  flex: 1; /* important! allows it to grow and push footer down */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header styling */

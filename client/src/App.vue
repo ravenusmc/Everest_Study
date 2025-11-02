@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div class="page-wrapper">
     <NavBar />
-    <router-view :key="$route.fullPath"></router-view>
+    <router-view /> <!-- or your page content -->
     <FootComponent />
   </div>
 </template>
@@ -21,19 +21,18 @@ export default {
 </script>
 
 <style>
-
 html, body {
   height: 100%;
   margin: 0;
-  padding: 0;
 }
 
-.center {
-  text-align: center;
+.page-wrapper {
+  min-height: 100vh; /* fill entire viewport */
+  display: flex;
+  flex-direction: column;
 }
 
-/* .main-project-div {
-  margin: 0 5%;
-} */
-
+router-view, main {
+  flex: 1; /* pushes footer down */
+}
 </style>
