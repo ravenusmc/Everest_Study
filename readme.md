@@ -7,7 +7,7 @@ data for all the people who died on the mountain. I needed a new project and so 
 Link to site: 
 https://en.wikipedia.org/wiki/List_of_people_who_died_climbing_Mount_Everest
 
-Steps to build project: 
+Steps followed to build project: 
 1. Web scrape data 
 2. Get data into a CSV file or mysql database 
 3. build a website 
