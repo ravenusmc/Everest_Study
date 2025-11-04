@@ -17,7 +17,7 @@ Steps followed to build project:
 # Getting started
 ### Installing
 
-Please note that these instructions are not 100% complete. 
+Please note that these instructions are not 100% complete nor may they really work. 
 
 1. Clone the repo
 2. Run [sudo] pip3 install or pip3 install flask
