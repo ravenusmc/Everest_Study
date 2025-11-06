@@ -248,7 +248,15 @@ export default {
   text-align: left;
 }
 
+th {
+  border: 2px solid black;
+}
+
+tr {
+  border: 2px solid black;
+}
+
 #popup th {
-  background-color: #f2f2f2;
+  background-color: #dfd3d3;
 }
 </style>

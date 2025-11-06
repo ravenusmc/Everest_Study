@@ -226,6 +226,10 @@ export default {
   text-align: left;
 }
 
+th {
+  border: 2px solid black;
+}
+
 tr {
   border: 2px solid black;
 }
