@@ -226,4 +226,15 @@ tr {
 #popup th {
   background-color: #dfd3d3;
 }
+
+button {
+  border: 2px solid black;
+  padding: 5px;
+  border-radius: 14px;
+}
+
+button:hover {
+  background-color: rgb(14, 8, 8);
+  color: white;
+}
 </style>
