@@ -229,7 +229,7 @@ tr {
 
 button {
   border: 2px solid black;
-  padding: 5px;
+  padding: 8px;
   border-radius: 14px;
 }
 
