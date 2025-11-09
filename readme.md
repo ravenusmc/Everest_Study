@@ -13,7 +13,8 @@ Steps followed to build project:
 3. build a website 
 4. build graphs on website
 
-There was one graph that I made that I decided not to have in the final project. It will be found with commented out code. 
+There was one graph that I made that I decided not to have in the final project. It will be found with commented out code. I 
+do not believe that I'll ever be adding it back. 
 
 # Getting started
 ### Installing
