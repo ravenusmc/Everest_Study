@@ -40,11 +40,11 @@ Please note that these instructions are not 100% complete nor may they really wo
 Once the program is downloaded, simply run the program as you would any other python program.
 Then follow the address, which your console/terminal tells you to go to see the
 website. Again, please do not forget to ensure that you have vue CLI installed
-as well as npm.
+as well as npm. I also have to say that this part is really old so may not work! 
 
 # Issues / Other
 
-None at this time
+The only issue that I have is that I should have made it so that dates were not mandatory on the filter. 
 
 # Preview
 
